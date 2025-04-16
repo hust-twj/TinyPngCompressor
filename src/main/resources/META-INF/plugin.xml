@@ -14,7 +14,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        TinyPngCompressor is an Android Studio plugin that helps developers easily compress images (e.g., PNG, JPEG) directly within the IDE.<br />
+        An IDEA plugin that helps developers easily compress images.<br />
 
         Powered by <a href="https://tinypng.com/">TinyPNG</a>, the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.<br />
 
@@ -23,7 +23,7 @@
 
 
     <change-notes><![CDATA[
-        <h4> 1.1.0(2025.4): Support Android Studio Android Studio Meerkat | 2024.3 </h3>
+        <h4> 1.1.1(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
 
     ]]></change-notes>
 
