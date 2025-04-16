@@ -8,7 +8,7 @@
     <name>TinyPngCompressor</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="hust_twj@163.com" url="http://husttwj.com">husttwj</vendor>
+    <vendor email="hust_twj@163.com" url="https://github.com/hust-twj/">husttwj</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
