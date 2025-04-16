@@ -151,8 +151,10 @@ public class TinyImageDialog extends JDialog {
     }
 
     public void setDialogSize(JFrame frame) {
+        //设置整个弹窗宽高
         this.setMinimumSize(new Dimension(frame.getWidth() * 3 / 5, frame.getHeight() * 3 / 5));
-        mSplitPanel.setDividerLocation(getMinimumSize().width * 2 / 5);
+        //设置左边宽度
+        mSplitPanel.setDividerLocation(getMinimumSize().width * 3 / 10);
         this.setLocationRelativeTo(frame);
         this.pack();
     }

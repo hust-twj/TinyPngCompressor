@@ -25,17 +25,17 @@
 3. The plugin will:
     - Scan and list supported image files.
     - Show original and compressed previews.
-    - Compress files via TinyPNG and update size.
+    - Compress images via TinyPNG and update size.
 4. You can cancel, retry, or skip individual files.
 
 
 ## 📦 Installation
 
-### From JetBrains Plugin Marketplace
+### JetBrains Plugin Marketplace
 
 1. Open your JetBrains IDE (IntelliJ IDEA, Android Studio, etc.)
 2. Go to **Settings → Plugins → Marketplace**
-3. Search for **TinyPngCompressor**
+3. Search for **TinyPngCompressor** 
 4. Click **Install**, then restart the IDE
 
 ### Manual Installation
@@ -44,13 +44,13 @@
    ```bash
    ./gradlew buildPlugin
 
-2. Find the output .zip file in build/distributions/
+2. Find the output `.zip` file in `build/distributions/`
 
 
 3. Open IDE → Settings → Plugins → ⚙️ → Install Plugin from Disk
 
 
-4. Select the .zip file and restart the IDE
+4. Select the `.zip` file and restart the IDE
 
 
 
