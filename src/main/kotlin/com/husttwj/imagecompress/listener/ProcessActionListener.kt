@@ -18,9 +18,9 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
         dialog.btnProcess.isEnabled = false
         dialog.btnProcess.text = "Compressing"
         dialog.btnCancel.text = "Cancel"
-        dialog.rootPane.defaultButton = dialog.getBtnCancel()
+        dialog.rootPane.defaultButton = dialog.btnCancel
         ThreadUtils.submit {
-            var hasError = false
+            var hasError: Boolean
             var repeatCount = 0
             do {
                 hasError = false
@@ -56,7 +56,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                     }
                     ThreadUtils.runOnUIThread {
                         (dialog.fileTree.model as DefaultTreeModel).nodeChanged(node)
-                        if (dialog.detailsAfter.text.trim().isNullOrEmpty()) {
+                        if (dialog.detailsAfter.text.trim().isEmpty()) {
                             dialog.mImageSelectListener.valueChanged(null)
                         }
                     }
@@ -80,7 +80,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
             }
             ThreadUtils.runOnUIThread {
                 dialog.onCompressFinish()
-                if (dialog.detailsAfter.text.trim().isNullOrEmpty()) {
+                if (dialog.detailsAfter.text.trim().isEmpty()) {
                     dialog.mImageSelectListener.valueChanged(null)
                 }
             }

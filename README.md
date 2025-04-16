@@ -21,7 +21,7 @@
 ## 🛠 How to Use
 
 1. **Right-click** on a png/jpeg image file or directory in the project view.
-2. Select **`TinyPngCompressor` → `Compress Image`**.
+2. Select **`Compress Image`** item.
 3. The plugin will:
     - Scan and list supported image files.
     - Show original and compressed previews.
