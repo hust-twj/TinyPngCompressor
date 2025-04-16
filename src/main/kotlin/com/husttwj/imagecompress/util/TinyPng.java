@@ -95,11 +95,11 @@ public class TinyPng {
         Request.Builder requestBuilder = new Request.Builder()
             .url(FileUtils.getConfig().getTinyUrl())
             .post(RequestBody.create(MediaType.parse(type), sourceFile));
-        if (FileUtils.getConfig().getTinyHeadName() != null
-            && FileUtils.getConfig().getTinyHeadValue() != null
-            && (FileUtils.getConfig().getTinyHeadName().size() == FileUtils.getConfig().getTinyHeadValue().size())) {
-            for (int i = 0; i < FileUtils.getConfig().getTinyHeadValue().size(); i++) {
-                head.put(FileUtils.getConfig().getTinyHeadName().get(i), FileUtils.getConfig().getTinyHeadValue().get(i));
+        if (FileUtils.getConfig().tinyHeadName != null
+            && FileUtils.getConfig().tinyHeadValue != null
+            && (FileUtils.getConfig().tinyHeadName.size() == FileUtils.getConfig().tinyHeadValue.size())) {
+            for (int i = 0; i < FileUtils.getConfig().tinyHeadValue.size(); i++) {
+                head.put(FileUtils.getConfig().tinyHeadName.get(i), FileUtils.getConfig().tinyHeadValue.get(i));
             }
         }
         for (String key : head.keySet()) {

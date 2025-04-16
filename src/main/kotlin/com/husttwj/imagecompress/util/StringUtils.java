@@ -2,9 +2,6 @@ package com.husttwj.imagecompress.util;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class StringUtils {
 
@@ -20,21 +17,6 @@ public class StringUtils {
             }
         }
         return null;
-    }
-
-    @Nullable
-    public static List<String> grep(String originStr, String key) {
-        if (originStr == null) {
-            return null;
-        }
-        final ArrayList<String> grepLines = new ArrayList<>();
-        final String[] split = originStr.split("\n");
-        for (String line : split) {
-            if (line != null && line.contains(key)) {
-                grepLines.add(line);
-            }
-        }
-        return grepLines;
     }
 
     public static String getFileSize(long fileSize) {

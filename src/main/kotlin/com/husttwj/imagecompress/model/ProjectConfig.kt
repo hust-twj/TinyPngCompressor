@@ -1,31 +1,21 @@
-package com.husttwj.imagecompress.model;
+package com.husttwj.imagecompress.model
 
 
-import java.util.List;
+class ProjectConfig {
 
-public class ProjectConfig {
+    private var tinyUrl: String? = null
 
-    private String tinyUrl;
+    @JvmField
+    val tinyHeadName: List<String>? = null
 
-    private List<String> tinyHeadName;
+    @JvmField
+    val tinyHeadValue: List<String>? = null
 
-    private List<String> tinyHeadValue;
 
-
-    public List<String> getTinyHeadName() {
-        return tinyHeadName;
-    }
-
-    public List<String> getTinyHeadValue() {
-        return tinyHeadValue;
-    }
-
-    public String getTinyUrl() {
-        if (tinyUrl == null || tinyUrl.isEmpty()) {
-            tinyUrl = "https://tinypng.com/backend/opt/shrink";
+    fun getTinyUrl(): String {
+        if (tinyUrl == null || tinyUrl!!.isEmpty()) {
+            tinyUrl = "https://tinypng.com/backend/opt/shrink"
         }
-        return tinyUrl;
+        return tinyUrl!!
     }
-
-
 }

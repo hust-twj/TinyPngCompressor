@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.husttwj"
-version = "1.18-SNAPSHOT"
+version = "2.11-SNAPSHOT"
 
 repositories {
     mavenCentral()

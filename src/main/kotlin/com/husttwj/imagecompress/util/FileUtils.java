@@ -9,9 +9,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
 import java.util.*;
@@ -49,40 +46,6 @@ public class FileUtils {
         initLogFile();
         initPluginInstallPath();
         OSHelper.getInstance().init();
-    }
-
-    public static boolean canOpenFile(File file) {
-        if (file == null || !file.exists() || file.isDirectory()) {
-            return false;
-        }
-        final String name = file.getName().toLowerCase();
-        String[] supportFileSuffix = new String[]{
-            ".png", ".jpg", ".jpeg", ".txt", ".json", ".css", ".js", ".html"
-        };
-        for (String suffix : supportFileSuffix) {
-            if (name.endsWith(suffix)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void saveImageToFile(Image image, File file) {
-        try {
-            if (image == null) {
-                return;
-            }
-            if (image instanceof BufferedImage) {
-                ImageIO.write((BufferedImage) image, "PNG", new FileOutputStream(file));
-            } else {
-                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
-                    image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                bufferedImage.getGraphics().drawImage(image, 0, 0, null);
-                ImageIO.write(bufferedImage, "PNG", new FileOutputStream(file));
-            }
-        } catch (Exception e) {
-            LogUtil.e("Save image error", e);
-        }
     }
 
     private static ProjectConfig sProjectConfig;
