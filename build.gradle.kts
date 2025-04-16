@@ -1,49 +1,57 @@
+//https://intellij-support.jetbrains.com/hc/en-us/community/posts/24237513501202-Android-Studio-Missing-essential-plugins-com-android-tools-design-org-jetbrains-android-2025
 
 // 插件版本和 Kotlin 版本定义
 plugins {
-   // id("java")
+    id("java")
     // 应用 IntelliJ 插件开发的 Gradle 插件
     id("org.jetbrains.intellij") version "1.13.3"
     // 应用 Kotlin JVM 插件
-    kotlin("jvm") version "1.9.22"
+  //  kotlin("jvm") version "1.9.22"
+
+
+    id("org.jetbrains.kotlin.jvm") version "1.9.25"
+    //id("org.jetbrains.intellij") version "1.17.4"
 }
 
 group = "com.husttwj"
-version = "1.0-SNAPSHOT"
+version = "1.8-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 
-// 配置 Kotlin 编译选项
-//tasks.withType<KotlinCompile> {
-//    kotlinOptions.jvmTarget = "17"
-//}
-
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
 //    version.set("2024.3")
-    type.set("IC") // Target IDE Platform
+//    type.set("IC") // Target IDE Platform
 //
-//    plugins.set(listOf(/* Plugin Dependencies */))
+//    //
+//    plugins.set(listOf(/*"org.jetbrains.kotlin", */"org.jetbrains.android"))
+//
+//    // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
+//    version.set("2024.2.5")
+//    // 插件的名称
+//    pluginName.set("TinyPngCompressor")
 
-    // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
-    version.set("2024.2.5")
+
+    version.set("2023.2.1.23")
+    type.set("AI")
+
+    plugins.set(listOf("org.jetbrains.android"))
+
     // 插件的名称
-    pluginName.set("ImageCompressor111")
-    // 发布渠道，这里设置为默认渠道
-    updateSinceUntilBuild.set(false)
+    pluginName.set("TinyPngCompressor")
+
+    //    // 发布渠道，这里设置为默认渠道
+//    updateSinceUntilBuild.set(false)
 }
 
 // 配置依赖项
 dependencies {
-    // 新增IntelliJ平台核心依赖
-   // implementation(intellijCore())
-
+    //libs
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
 
     // Kotlin 标准库
     implementation(kotlin("stdlib-jdk8"))
@@ -70,8 +78,11 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("242")
-        untilBuild.set("252.*")
+//        sinceBuild.set("242")
+//        untilBuild.set("252.*")
+
+        sinceBuild.set("232")
+        untilBuild.set("243.*")
     }
 
     signPlugin {
@@ -84,3 +95,6 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+
+// 确保 Kotlin 目录也支持 Java 文件
+sourceSets["main"].java.srcDirs("src/main/java", "src/main/kotlin")

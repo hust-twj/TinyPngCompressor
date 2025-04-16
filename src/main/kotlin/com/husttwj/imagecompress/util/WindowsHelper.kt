@@ -2,7 +2,6 @@ package com.husttwj.imagecompress.util
 
 
 import java.awt.Image
-import java.awt.Toolkit
 import java.io.File
 import java.nio.charset.Charset
 
@@ -26,7 +25,7 @@ class WindowsHelper : OSHelper() {
                     }
                 }
             } catch (t: Throwable) {
-                Log.e("Get current ip error", t)
+                LogUtil.e("Get current ip error", t)
             }
             return ""
         }
@@ -108,7 +107,7 @@ class WindowsHelper : OSHelper() {
                 }
             }
         } catch (t: Throwable) {
-            Log.e("getGitUrlByPath", t)
+            LogUtil.e("getGitUrlByPath", t)
         }
         return filePath
     }
@@ -148,7 +147,7 @@ class WindowsHelper : OSHelper() {
             execCommand("\"${adbPath}\" kill-server")
             Thread.sleep(100)
         } catch (t: Throwable) {
-            Log.e("kill adb error", t)
+            LogUtil.e("kill adb error", t)
         }
     }
 
@@ -165,7 +164,7 @@ class WindowsHelper : OSHelper() {
                 execCommand("explorer \"${file.parent}\"")
             }
         } catch (t: Throwable) {
-            Log.e("openToDir $filePath error", t)
+            LogUtil.e("openToDir $filePath error", t)
         }
     }
 
@@ -195,7 +194,7 @@ class WindowsHelper : OSHelper() {
                 }
             }
         } catch (t: Throwable) {
-            Log.e("getApkName Error", t)
+            LogUtil.e("getApkName Error", t)
         }
         return null
     }

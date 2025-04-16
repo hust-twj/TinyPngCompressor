@@ -1,15 +1,9 @@
 package com.husttwj.imagecompress.listener
 
-//import com.bytedance.tools.codelocatortor.tinypng.TinyPng
-//import com.bytedance.tools.codelocator.utils.FileUtils
-//import com.bytedance.tools.codelocator.utils.Log
-//import com.bytedance.tools.codelocator.utils.Mob
-//import com.bytedance.tools.codelocator.utils.ResUtils
-//import com.husttwj.imagecompress.util.ThreadUtils
 import com.husttwj.imagecompress.util.ThreadUtils
 import com.husttwj.imagecompress.ui.dialog.TinyImageDialog
 import com.husttwj.imagecompress.util.FileUtils
-import com.husttwj.imagecompress.util.Log
+import com.husttwj.imagecompress.util.LogUtil
 import com.husttwj.imagecompress.util.TinyPng
 import com.intellij.openapi.ui.Messages
 import java.awt.event.ActionEvent
@@ -52,7 +46,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                             count = 0
                         }
                     } catch (throwable: Throwable) {
-                        Log.d("压缩图片异常", throwable)
+                        LogUtil.d("压缩图片异常", throwable)
                         if (sleepTime < 5000) {
                             count = 0
                             sleepTime += 500

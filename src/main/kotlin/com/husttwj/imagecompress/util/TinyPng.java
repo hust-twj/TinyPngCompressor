@@ -39,7 +39,7 @@ public class TinyPng {
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             sslSocketFactory = sslContext.getSocketFactory();
         } catch (Exception e) {
-            Log.d("OKHttp Error", e);
+            LogUtil.d("OKHttp Error", e);
         }
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder()

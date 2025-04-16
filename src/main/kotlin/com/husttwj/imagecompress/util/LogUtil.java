@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Log {
+public class LogUtil {
 
     public static final boolean DEBUG = false;
 
@@ -14,6 +14,7 @@ public class Log {
 
     public static void d(String msg) {
         d(msg, null);
+        System.out.print(msg);
     }
 
     public static void d(String msg, Throwable t) {

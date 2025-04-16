@@ -2,7 +2,6 @@ package com.husttwj.imagecompress.util
 
 
 import java.awt.Image
-import java.awt.Toolkit
 import java.io.File
 import java.nio.charset.Charset
 
@@ -22,7 +21,7 @@ class MacHelper : OSHelper() {
         try {
             execCommand("chmod a+x $sCodeLocatorPluginShellPath/imgcopy")
         } catch (e: Exception) {
-            Log.e("组件初始化失败 Path: $sCodeLocatorPluginShellPath", e)
+            LogUtil.e("组件初始化失败 Path: $sCodeLocatorPluginShellPath", e)
         }
     }
 
@@ -102,7 +101,7 @@ class MacHelper : OSHelper() {
                     return ips.trim()
                 }
             } catch (t: Throwable) {
-                Log.e("Get current ip error", t)
+                LogUtil.e("Get current ip error", t)
             }
             return ""
         }
@@ -132,7 +131,7 @@ class MacHelper : OSHelper() {
             try {
                 execCommand("open /Applications/Charles.app")
             } catch (t: Throwable) {
-                Log.e("openCharles error", t)
+                LogUtil.e("openCharles error", t)
             }
         }
     }
@@ -150,7 +149,7 @@ class MacHelper : OSHelper() {
                 file.delete()
                 return imgcopy.resultCode == 0
             } catch (e: Exception) {
-                Log.e("copyimg error", e)
+                LogUtil.e("copyimg error", e)
             }
         }
         return false
@@ -161,7 +160,7 @@ class MacHelper : OSHelper() {
             execCommand("'${adbPath}' kill-server")
             Thread.sleep(100)
         } catch (t: Throwable) {
-            Log.e("kill adb error", t)
+            LogUtil.e("kill adb error", t)
         }
     }
 
@@ -180,7 +179,7 @@ class MacHelper : OSHelper() {
                 execCommand("open '${file.parent}'")
             }
         } catch (t: Throwable) {
-            Log.e("openToDir $filePath error", t)
+            LogUtil.e("openToDir $filePath error", t)
         }
     }
 
@@ -205,7 +204,7 @@ class MacHelper : OSHelper() {
                 }
             }
         } catch (t: Throwable) {
-            Log.e("getApkName Error", t)
+            LogUtil.e("getApkName Error", t)
         }
         return null
     }
@@ -225,7 +224,7 @@ class MacHelper : OSHelper() {
                 }
             }
         } catch (t: Throwable) {
-            Log.e("getGitUrlByPath error", t)
+            LogUtil.e("getGitUrlByPath error", t)
         }
         return filePath
     }
@@ -234,7 +233,7 @@ class MacHelper : OSHelper() {
         try {
             execCommand("say '$content'")
         } catch (t: Throwable) {
-            Log.e("say $content error", t)
+            LogUtil.e("say $content error", t)
         }
     }
 

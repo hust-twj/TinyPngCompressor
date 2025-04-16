@@ -7,7 +7,6 @@ import com.intellij.openapi.wm.ex.WindowManagerEx
 import java.awt.Dimension
 import java.awt.Image
 import java.io.File
-import java.nio.file.Path
 import javax.swing.JDialog
 import javax.swing.filechooser.FileSystemView
 
@@ -92,7 +91,7 @@ abstract class OSHelper {
         try {
             ApplicationManagerEx.getApplicationEx().restart(true)
         } catch (t: Throwable) {
-            Log.e("restart error", t)
+            LogUtil.e("restart error", t)
         }
     }
 

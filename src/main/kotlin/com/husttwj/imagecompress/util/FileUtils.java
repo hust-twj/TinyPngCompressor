@@ -10,8 +10,6 @@ package com.husttwj.imagecompress.util;
 import com.husttwj.imagecompress.model.ProjectConfig;
 import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.extensions.PluginId;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 //import org.jetbrains.android.facet.AndroidFacet;
@@ -21,8 +19,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
@@ -138,17 +134,17 @@ public class FileUtils {
         }
     }
 
-    public static void saveRuntimeInfo(String info) {
-        saveContentToFile(new File(sCodeLocatorMainDirPath, SAVE_GRAPH_FILE_NAME).getAbsolutePath(), Log.getTimeStamp() + "\n" + info);
-    }
-
-    public static void saveCommandData(String info) {
-        saveContentToFile(new File(sCodeLocatorMainDirPath, GRAPH_COMMAND_FILE_NAME).getAbsolutePath(), Log.getTimeStamp() + "\n" + info);
-    }
-
-    public static void saveDumpData(String dumpInfo) {
-        saveContentToFile(new File(sCodeLocatorMainDirPath, DUMP_COMMAND_FILE_NAME).getAbsolutePath(), Log.getTimeStamp() + "\n" + dumpInfo);
-    }
+//    public static void saveRuntimeInfo(String info) {
+//        saveContentToFile(new File(sCodeLocatorMainDirPath, SAVE_GRAPH_FILE_NAME).getAbsolutePath(), LogUtil.getTimeStamp() + "\n" + info);
+//    }
+//
+//    public static void saveCommandData(String info) {
+//        saveContentToFile(new File(sCodeLocatorMainDirPath, GRAPH_COMMAND_FILE_NAME).getAbsolutePath(), LogUtil.getTimeStamp() + "\n" + info);
+//    }
+//
+//    public static void saveDumpData(String dumpInfo) {
+//        saveContentToFile(new File(sCodeLocatorMainDirPath, DUMP_COMMAND_FILE_NAME).getAbsolutePath(), LogUtil.getTimeStamp() + "\n" + dumpInfo);
+//    }
 
 //    public static WFile getCodeLocatorFile(WFile rootFile, int androidVersion) {
 //        if (androidVersion >= CodeLocatorConstants.USE_TRANS_FILE_SDK_VERSION) {
@@ -175,19 +171,19 @@ public class FileUtils {
 //        return null;
 //    }
 
-    public static void saveContentToFile(String filePath, String info) {
-        try {
-            saveContentToFile(filePath, info.getBytes(CHARSET_NAME));
-        } catch (UnsupportedEncodingException e) {
-            Log.e("保存文件失败", e);
-        }
-    }
+//    public static void saveContentToFile(String filePath, String info) {
+//        try {
+//            saveContentToFile(filePath, info.getBytes(CHARSET_NAME));
+//        } catch (UnsupportedEncodingException e) {
+//            LogUtil.e("保存文件失败", e);
+//        }
+//    }
 
     public static boolean saveContentToFile(File file, String info) {
         try {
             return saveContentToFile(file, info.getBytes(CHARSET_NAME));
         } catch (UnsupportedEncodingException e) {
-            Log.e("保存文件失败", e);
+            LogUtil.e("保存文件失败", e);
             return false;
         }
     }
@@ -307,7 +303,7 @@ public class FileUtils {
             outputStream.close();
             return true;
         } catch (Exception e) {
-            Log.e("保存文件失败", e);
+            LogUtil.e("保存文件失败", e);
             return false;
         }
     }
@@ -431,7 +427,7 @@ public class FileUtils {
                 return new String(fileContentBytes, CHARSET_NAME);
             }
         } catch (Exception e) {
-            Log.e("读取文件失败 " + file.getAbsolutePath(), e);
+            LogUtil.e("读取文件失败 " + file.getAbsolutePath(), e);
         }
         return "";
     }
@@ -447,7 +443,7 @@ public class FileUtils {
             in.close();
             return fileBytes;
         } catch (Exception e) {
-            Log.e("读取文件失败 " + file.getAbsolutePath(), e);
+            LogUtil.e("读取文件失败 " + file.getAbsolutePath(), e);
         }
         return null;
     }
@@ -463,7 +459,7 @@ public class FileUtils {
             in.close();
             return new String(fileContent, "UTF-8");
         } catch (Exception e) {
-            Log.e("读取文件失败 " + file.getCanonicalPath(), e);
+            LogUtil.e("读取文件失败 " + file.getCanonicalPath(), e);
         }
         return "";
     }

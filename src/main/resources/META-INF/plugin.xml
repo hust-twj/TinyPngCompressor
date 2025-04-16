@@ -18,6 +18,17 @@
         Smart PNG and JPEG compression using &lt;a href="https://tinypng.com/"&gt;TinyPNG&lt;/a&gt; service.
     </description>
 
+    <depends>com.intellij.modules.platform</depends>
+
+<!--    <depends>com.intellij.modules.java</depends>-->
+
+<!--    <depends>org.jetbrains.kotlin</depends>-->
+
+<!--    <depends>org.jetbrains.android</depends>-->
+
+
+
+
     <!-- 注册右键菜单 Action -->
   <!--  <actions>
         <action id="CompressImageAction"
@@ -34,6 +45,11 @@
         <applicationService serviceImplementation="com.husttwj.imagecompress.PluginGlobalSettings"/>
        <!-- <errorHandler implementation="com.nvlad.tinypng.diagnostic.ErrorReportHandler"/>-->
 
+      <!--  <defaultProjectTypeProvider type="Android"/>-->
+
+        <applicationInitializedListener
+                implementation="com.husttwj.imagecompress.listener.ApplicationInitializedListener"/>
+
         <!-- 设置页面 -->
         <applicationConfigurable
                 instance="com.husttwj.imagecompress.ui.settings.Settings"
@@ -42,7 +58,7 @@
                 groupId="tools"/>
     </extensions>
 
-    <!-- 右键菜单动作 -->
+    <!-- 注册右键菜单动作 -->
     <actions>
         <action id="CompressImageAction"
                 class="com.husttwj.imagecompress.action.CompressAction"

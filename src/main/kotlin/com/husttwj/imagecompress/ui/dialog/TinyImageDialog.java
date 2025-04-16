@@ -14,6 +14,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.CheckboxTree;
 import com.intellij.ui.JBColor;
+import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import com.intellij.util.ui.tree.TreeUtil;
 import org.jetbrains.annotations.Nullable;
@@ -168,7 +169,7 @@ public class TinyImageDialog extends JDialog {
 
                     private Color background = UIUtil.getPanelBackground();
 
-                    private Color dashes = UIUtil.getSeparatorColor();
+                    private Color dashes = JBUI.CurrentTheme.CustomFrameDecorations.separatorForeground();
 
                     public void setBorder(Border b) {
                     }
