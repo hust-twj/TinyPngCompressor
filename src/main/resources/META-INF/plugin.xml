@@ -34,7 +34,10 @@
         <applicationService serviceImplementation="com.husttwj.imagecompress.PluginGlobalSettings"/>
 
         <applicationInitializedListener
-                implementation="com.husttwj.imagecompress.listener.ApplicationInitializedListener"/>
+                implementation="com.husttwj.imagecompress.listener.CompressApplicationInitializedListener"/>
+
+        <startupActivity implementation="com.husttwj.imagecompress.listener.CompressStartupActivity"/>
+
 
         <!-- 设置页面 -->
         <!--<applicationConfigurable
