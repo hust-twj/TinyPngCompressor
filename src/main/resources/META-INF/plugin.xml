@@ -6,7 +6,6 @@
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>TinyPngCompressor</name>
-    <version>1.0.1</version>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="hust_twj@163.com" url="http://husttwj.com">husttwj</vendor>

@@ -40,7 +40,7 @@
 
 ### Manual Installation
 
-1. Build the plugin using Gradle:
+1. Clone the project and build the plugin using Gradle:
    ```bash
    ./gradlew buildPlugin
 2. Find the output `.zip` file in `build/distributions/`
