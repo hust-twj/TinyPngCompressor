@@ -1,15 +1,12 @@
-package com.husttwj.imagecompress.listener;
+package com.husttwj.imagecompress.listener
+
+import com.husttwj.imagecompress.util.FileUtils
+import com.intellij.ide.ApplicationInitializedListener
 
 
-import com.husttwj.imagecompress.util.FileUtils;
+class CompressApplicationInitializedListener : ApplicationInitializedListener {
 
-
-public class CompressApplicationInitializedListener implements com.intellij.ide.ApplicationInitializedListener {
-
-    @Override
-    public void componentsInitialized() {
-        FileUtils.init();
-
+    override fun componentsInitialized() {
+        FileUtils.init()
     }
-
 }
