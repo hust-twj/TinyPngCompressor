@@ -13,20 +13,21 @@
 - ✅ Easy-to-use, intuitive UI inside your IDE
 
 ## 📸 Screenshots
+![guide 1](images/guide_1.png)
 
-> _Include screenshots here if available, e.g. dialogs, before/after view, compression progress._
+![guide 2](images/guide_2.png)
+
 
 ## 🛠 How to Use
 
-1. **Right-click** on an image file or directory in the project view.
-2. Select **`ImageCompress` → `Compress Image(s)`**.
+1. **Right-click** on a png/jpeg image file or directory in the project view.
+2. Select **`TinyPngCompressor` → `Compress Image`**.
 3. The plugin will:
     - Scan and list supported image files.
     - Show original and compressed previews.
     - Compress files via TinyPNG and update size.
 4. You can cancel, retry, or skip individual files.
 
-> 🔒 Requires a TinyPNG API Key. You can configure it under `Settings → ImageCompress`.
 
 ## 📦 Installation
 
@@ -34,7 +35,7 @@
 
 1. Open your JetBrains IDE (IntelliJ IDEA, Android Studio, etc.)
 2. Go to **Settings → Plugins → Marketplace**
-3. Search for **ImageCompress**
+3. Search for **TinyPngCompressor**
 4. Click **Install**, then restart the IDE
 
 ### Manual Installation
@@ -51,13 +52,6 @@
 
 4. Select the .zip file and restart the IDE
 
-
-## 🔧 Configuration
-To use the TinyPNG API, you’ll need to register for an API key:
-
-Visit: https://tinypng.com/developers
-Get your API Key
-Go to Settings → ImageCompress in the IDE and paste your API key
 
 
 ## 🧱 Project Structure

@@ -81,7 +81,7 @@ public class FileUtils {
                 ImageIO.write(bufferedImage, "PNG", new FileOutputStream(file));
             }
         } catch (Exception e) {
-            LogUtil.e("保存图片失败", e);
+            LogUtil.e("Save image error", e);
         }
     }
 

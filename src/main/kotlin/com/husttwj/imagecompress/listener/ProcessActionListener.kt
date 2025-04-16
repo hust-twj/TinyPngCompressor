@@ -16,8 +16,8 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
 
         dialog.compressInProgress = true
         dialog.btnProcess.isEnabled = false
-        dialog.btnProcess.text = "压缩中"
-        dialog.btnCancel.text = "取消"
+        dialog.btnProcess.text = "Compressing"
+        dialog.btnCancel.text = "Cancel"
         dialog.rootPane.defaultButton = dialog.getBtnCancel()
         ThreadUtils.submit {
             var hasError = false
@@ -46,7 +46,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                             count = 0
                         }
                     } catch (throwable: Throwable) {
-                        LogUtil.d("压缩图片异常", throwable)
+                        LogUtil.d("Compress image error", throwable)
                         if (sleepTime < 5000) {
                             count = 0
                             sleepTime += 500
@@ -71,7 +71,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                     dialog.rootPane.defaultButton = dialog.btnProcess
                     Messages.showMessageDialog(
                         dialog.contentPane,
-                        "压缩失败",
+                        "Compress error",
                         "TinyPng Compress",
                         Messages.getInformationIcon()
                     )

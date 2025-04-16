@@ -5,7 +5,7 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>ImageCompress</name>
+    <name>TinyPngCompressor</name>
     <version>1.0.1</version>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
@@ -15,7 +15,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>
-        Smart PNG and JPEG compression using &lt;a href="https://tinypng.com/"&gt;TinyPNG&lt;/a&gt; service.
+        TinyPngCompressor is an Android Studio plugin that helps developers easily compress image files (e.g., PNG, JPEG) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
     </description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -41,7 +41,7 @@
                 class="com.husttwj.imagecompress.action.CompressAction"
                 text="Compress Image"
                 icon = "/icons/compress-image.svg"
-                description="压缩选中的图片文件">
+                description="Compress selected images">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
         </action>

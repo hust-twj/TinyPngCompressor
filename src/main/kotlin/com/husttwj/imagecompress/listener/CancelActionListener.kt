@@ -12,8 +12,7 @@ class CancelActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog)
             dialog.dispose()
         }
         dialog.compressInProgress = false
-        //todo 文案
-        dialog.btnCancel.text = "取消"
+        dialog.btnCancel.text = "Cancel"
     }
 
 }
