@@ -5,7 +5,7 @@
 ## ✨ Features
 
 - ✅ Compress PNG and JPEG images with TinyPNG
-- ✅ Compatible with the latest Android Studio (version 2024.3 or newer)
+- ✅ Support the latest Android Studio (version 2024.3 or newer)
 - ✅ Before/After image preview with compression ratio
 - ✅ Batch compression support via project file tree
 - ✅ Displays file size reduction and progress
@@ -31,21 +31,30 @@
 
 ## 📦 Installation
 
-### JetBrains Plugin Marketplace
+Choose one of the following methods to install the plugin:
+
+### JetBrains Plugin Marketplace (Recommended)
 
 1. Open your JetBrains IDE (IntelliJ IDEA, Android Studio, etc.)
 2. Go to **Settings → Plugins → Marketplace**
 3. Search for **TinyPngCompressor** 
 4. Click **Install**, then restart the IDE
 
-### Manual Installation
+### Manual Installation(Pre-built Zip)
+
+1. Download `TinyPngCompressor-xxx.zip` from [release page](https://github.com/hust-twj/TinyPngCompress/releases)
+2. Go to **Settings → Plugins → ⚙️ → Install Plugin from Disk**
+3. Select the `.zip` file above and restart the IDE
+
+
+### Manual Installation(Build from Source)
 
 1. Clone the project and build the plugin using Gradle:
    ```bash
    ./gradlew buildPlugin
 2. Find the output `.zip` file in `build/distributions/`
-3. Open IDE → Settings → Plugins → ⚙️ → Install Plugin from Disk
-4. Select the `.zip` file and restart the IDE
+3. Go to **Settings → Plugins → ⚙️ → Install Plugin from Disk**
+4. Select the `.zip` file above and restart the IDE
 
 
 ## 🧱 Project Structure
