@@ -1,7 +1,5 @@
 package com.husttwj.imagecompress.util;
 
-
-
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

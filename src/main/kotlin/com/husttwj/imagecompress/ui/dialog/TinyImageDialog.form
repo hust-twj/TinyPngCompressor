@@ -35,7 +35,7 @@
                 </constraints>
                 <properties>
                   <enabled value="false"/>
-                  <text value="保存"/>
+                  <text value="Save"/>
                 </properties>
               </component>
               <component id="5723f" class="javax.swing.JButton" binding="mBtnCancel">
@@ -43,7 +43,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="取消"/>
+                  <text value="Cancel"/>
                 </properties>
               </component>
               <component id="ed202" class="javax.swing.JButton" binding="mBtnProcess">
@@ -51,7 +51,7 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="压缩"/>
+                  <text value="Compress"/>
                 </properties>
               </component>
             </children>
@@ -170,7 +170,7 @@
                             <properties>
                               <font size="16" style="1"/>
                               <foreground color="-13542090"/>
-                              <text value="压缩后"/>
+                              <text value="Before Compress"/>
                             </properties>
                           </component>
                         </children>
@@ -211,7 +211,7 @@
                             <properties>
                               <font size="16" style="1"/>
                               <foreground color="-9291977"/>
-                              <text value="压缩前"/>
+                              <text value="After Compress"/>
                             </properties>
                           </component>
                         </children>

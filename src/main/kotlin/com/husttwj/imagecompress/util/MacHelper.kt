@@ -1,27 +1,26 @@
 package com.husttwj.imagecompress.util
 
 
-import java.awt.Image
 import java.io.File
 import java.nio.charset.Charset
 
 class MacHelper : OSHelper() {
 
-    private var sCodeLocatorPluginShellPath: String? = null
+    private var sPluginShellPath: String? = null
 
     override fun init() {
-        sCodeLocatorPluginShellPath =
+        sPluginShellPath =
             FileUtils.sPluginDir.replace(" ", "\\ ")
         if (!File(FileUtils.sPluginDir, "imgcopy").exists()) {
             try {
-                execCommand("gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o $sCodeLocatorPluginShellPath/imgcopy $sCodeLocatorPluginShellPath/imgcopy.m")
+                execCommand("gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o $sPluginShellPath/imgcopy $sPluginShellPath/imgcopy.m")
             } catch (ignore: Exception) {
             }
         }
         try {
-            execCommand("chmod a+x $sCodeLocatorPluginShellPath/imgcopy")
+            execCommand("chmod a+x $sPluginShellPath/imgcopy")
         } catch (e: Exception) {
-            LogUtil.e("组件初始化失败 Path: $sCodeLocatorPluginShellPath", e)
+            LogUtil.e("组件初始化失败 Path: $sPluginShellPath", e)
         }
     }
 
@@ -104,64 +103,6 @@ class MacHelper : OSHelper() {
             return ""
         }
 
-
-    override fun openCharles() {
-        if (File("/Applications/Charles.app").exists()) {
-            try {
-                execCommand("open /Applications/Charles.app")
-            } catch (t: Throwable) {
-                LogUtil.e("openCharles error", t)
-            }
-        }
-    }
-
-    override fun copyImageToClipboard(image: Image?): Boolean {
-        val file =
-            File(FileUtils.sImageFileDirPath, "tmp.png")
-        file.delete()
-        FileUtils.saveImageToFile(image, file)
-        if (file.exists() && file.length() > 0) {
-            try {
-                val imgcopy = execCommand(
-                    File(FileUtils.sPluginDir, "imgcopy").absolutePath.replace(" ", "\\ ") + " '" + file.absolutePath + "'"
-                )
-                file.delete()
-                return imgcopy.resultCode == 0
-            } catch (e: Exception) {
-                LogUtil.e("copyimg error", e)
-            }
-        }
-        return false
-    }
-
-    override fun killAdb(adbPath: String) {
-        try {
-            execCommand("'${adbPath}' kill-server")
-            Thread.sleep(100)
-        } catch (t: Throwable) {
-            LogUtil.e("kill adb error", t)
-        }
-    }
-
-    override fun open(filePath: String?) {
-        filePath ?: return
-        val file = File(filePath)
-        if (!file.exists()) {
-            return
-        }
-        try {
-            if (file.isDirectory) {
-                execCommand("open '$filePath'")
-            } else if (FileUtils.canOpenFile(file)) {
-                execCommand("open '$filePath'")
-            } else {
-                execCommand("open '${file.parent}'")
-            }
-        } catch (t: Throwable) {
-            LogUtil.e("openToDir $filePath error", t)
-        }
-    }
-
     override fun getApkPkgName(apkFilePath: String?): String? {
         apkFilePath ?: return null
         if (aaptFilePath.isEmpty()) {
@@ -206,32 +147,6 @@ class MacHelper : OSHelper() {
             LogUtil.e("getGitUrlByPath error", t)
         }
         return filePath
-    }
-
-    override fun say(content: String) {
-        try {
-            execCommand("say '$content'")
-        } catch (t: Throwable) {
-            LogUtil.e("say $content error", t)
-        }
-    }
-
-    override fun getDependenciesResult(projectPath: String, mainModuleName: String, depFilePath: String): ExecResult {
-        val commands = if (File(System.getProperty("user.home"), ".zshrc").exists()) {
-            "cd '$projectPath'; source ~/.zshrc; ./gradlew :$mainModuleName:dependencies > '$depFilePath'"
-        } else {
-            "cd '$projectPath'; ./gradlew :$mainModuleName:dependencies > '$depFilePath'"
-        }
-        return execCommand(commands)
-    }
-
-    override fun downloadDependenciesSource(projectPath: String): ExecResult {
-        val commands = if (File(System.getProperty("user.home"), ".zshrc").exists()) {
-            "cd '$projectPath'; source ~/.zshrc; ./gradlew :JustForCodeIndexModuleRelease:ideaModule"
-        } else {
-            "cd '$projectPath'; ./gradlew :JustForCodeIndexModuleRelease:ideaModule"
-        }
-        return execCommand(commands)
     }
 
     @Throws(java.lang.Exception::class)

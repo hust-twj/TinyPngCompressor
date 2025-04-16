@@ -40,6 +40,7 @@
         <action id="CompressImageAction"
                 class="com.husttwj.imagecompress.action.CompressAction"
                 text="Compress Image"
+                icon = "/icons/compress-image.svg"
                 description="压缩选中的图片文件">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>

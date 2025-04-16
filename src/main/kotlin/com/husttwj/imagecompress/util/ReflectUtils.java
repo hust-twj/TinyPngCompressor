@@ -1,12 +1,9 @@
 package com.husttwj.imagecompress.util;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 public class ReflectUtils {
-
-    private static HashMap<String, Field> sCacheFiled = new HashMap<>();
 
     private static HashMap<String, Method> sCacheMethod = new HashMap<>();
 
@@ -25,32 +22,6 @@ public class ReflectUtils {
             sGetDeclaredField.setAccessible(true);
         } catch (Throwable t) {
         }
-    }
-
-    public static Field getClassField(Class clz, String fieldName) {
-        Field declaredField = null;
-        final String cacheKey = clz.getName() + "." + fieldName;
-        if (sCacheFiled.containsKey(cacheKey)) {
-            return sCacheFiled.get(cacheKey);
-        }
-        while (clz != null && clz != Object.class) {
-            try {
-                if (sGetDeclaredField != null) {
-                    declaredField = (Field) sGetDeclaredField.invoke(clz, fieldName);
-                } else {
-                    declaredField = clz.getDeclaredField(fieldName);
-                }
-                declaredField.setAccessible(true);
-            } catch (Throwable ignore) {
-            }
-            if (declaredField != null) {
-                sCacheFiled.put(cacheKey, declaredField);
-                return declaredField;
-            }
-            clz = clz.getSuperclass();
-        }
-        sCacheFiled.put(cacheKey, null);
-        return null;
     }
 
     public static Method getClassMethod(Class clz, String methodName) {

@@ -45,7 +45,7 @@ public class FileUtils {
         if (sLogFilePath != null) {
             return;
         }
-        initCodeLocatorDir();
+        initDir();
         initLogFile();
         initPluginInstallPath();
         OSHelper.getInstance().init();
@@ -142,7 +142,7 @@ public class FileUtils {
         }
     }
 
-    private static void initCodeLocatorDir() {
+    private static void initDir() {
         final String userHomePath = System.getProperty("user.home");
         sUserDesktopPath = OSHelper.getInstance().getUserDesktopFilePath();
         initMainFileDir(userHomePath);

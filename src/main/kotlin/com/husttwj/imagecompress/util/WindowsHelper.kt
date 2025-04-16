@@ -1,7 +1,6 @@
 package com.husttwj.imagecompress.util
 
 
-import java.awt.Image
 import java.io.File
 import java.nio.charset.Charset
 
@@ -92,62 +91,6 @@ class WindowsHelper : OSHelper() {
         return filePath
     }
 
-//    override fun getToolbarHeight(codeLocatorWindow: CodeLocatorWindow): Int {
-//        if (codeLocatorWindow.toolsBarJComponent.componentCount > 0) {
-//            return codeLocatorWindow.toolsBarJComponent.height / codeLocatorWindow.toolsBarJComponent.componentCount
-//        }
-//        return Toolkit.getDefaultToolkit().getScreenInsets(codeLocatorWindow.graphicsConfiguration).bottom
-//    }
-
-    override fun say(content: String) {
-        execCommand("mshta vbscript:createobject(\"sapi.spvoice\").speak(\"${content}\")(window.close)")
-    }
-
-    override fun openCharles() {
-        val menuFile = File(
-            System.getProperty("user.home"),
-            "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Charles\\Charles.lnk"
-        )
-        if (menuFile.exists()) {
-            try {
-                execCommand(true, false, "\"${menuFile}\"")
-                return
-            } catch (t: Throwable) {
-                t.printStackTrace()
-            }
-        }
-    }
-
-    override fun copyImageToClipboard(image: Image?): Boolean {
-        return false
-    }
-
-    override fun killAdb(adbPath: String) {
-        try {
-            execCommand("\"${adbPath}\" kill-server")
-            Thread.sleep(100)
-        } catch (t: Throwable) {
-            LogUtil.e("kill adb error", t)
-        }
-    }
-
-    override fun open(filePath: String?) {
-        filePath ?: return
-        val file = File(filePath)
-        if (!file.exists()) {
-            return
-        }
-        try {
-            if (file.isDirectory) {
-                execCommand("explorer \"$filePath\"")
-            } else {
-                execCommand("explorer \"${file.parent}\"")
-            }
-        } catch (t: Throwable) {
-            LogUtil.e("openToDir $filePath error", t)
-        }
-    }
-
     override fun getApkPkgName(apkFilePath: String?): String? {
         apkFilePath ?: return null
         if (aaptFilePath.isEmpty()) {
@@ -177,18 +120,6 @@ class WindowsHelper : OSHelper() {
             LogUtil.e("getApkName Error", t)
         }
         return null
-    }
-
-    override fun getDependenciesResult(
-        projectPath: String,
-        mainModuleName: String,
-        depFilePath: String
-    ): ExecResult {
-        return execCommand("cd \"$projectPath\" & ${getRootPath(projectPath)} & \"$projectPath${File.separator}gradlew.bat\" :${mainModuleName}:dependencies > \"${depFilePath}\"")
-    }
-
-    override fun downloadDependenciesSource(projectPath: String): ExecResult {
-        return execCommand("cd \"$projectPath\" & ${getRootPath(projectPath)} & \"$projectPath${File.separator}gradlew.bat\" :JustForCodeIndexModuleRelease:ideaModule")
     }
 
     @Throws(java.lang.Exception::class)

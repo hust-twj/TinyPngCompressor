@@ -73,6 +73,13 @@ public class TinyPng {
         return trustManager;
     }
 
+    /**
+     * 将本地图片文件上传到tinypng 压缩服务，获取压缩后的图片下载地址，然后下载压缩后的图片并保存到本地
+     * @param parent
+     * @param sourceFile
+     * @return
+     * @throws Exception
+     */
     public static UploadInfo tinifyFile(String parent, File sourceFile) throws Exception {
         if (sourceFile == null || !sourceFile.exists() || sourceFile.isDirectory()) {
             return null;

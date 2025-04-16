@@ -2,11 +2,9 @@ package com.husttwj.imagecompress.util
 
 
 import com.android.tools.idea.sdk.AndroidSdks
-import com.intellij.openapi.application.ex.ApplicationManagerEx
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ex.WindowManagerEx
 import java.awt.Dimension
-import java.awt.Image
 import java.io.File
 import java.nio.file.Path
 import javax.swing.JDialog
@@ -29,29 +27,13 @@ abstract class OSHelper {
 
     abstract val userName: String
 
-
     abstract val aaptFilePath: String
 
     abstract fun getGitUrlByPath(filePath: String): String
 
-    abstract fun openCharles()
-
-
     open fun getUserDesktopFilePath(): String = FileSystemView.getFileSystemView().homeDirectory.absolutePath
 
     abstract fun getApkPkgName(apkFilePath: String?): String?
-
-    abstract fun open(dirPath: String?)
-
-    abstract fun killAdb(adbPath: String)
-
-    abstract fun copyImageToClipboard(image: Image?): Boolean
-
-    abstract fun say(content: String)
-
-    abstract fun getDependenciesResult(projectPath: String, mainModuleName: String, depFilePath: String): ExecResult
-
-    abstract fun downloadDependenciesSource(projectPath: String): ExecResult
 
     abstract fun execCommand(vararg command: String): ExecResult
 
@@ -79,7 +61,6 @@ abstract class OSHelper {
         )
         dialog.setLocationRelativeTo(WindowManagerEx.getInstance().getFrame(project))
     }
-
 
 }
 

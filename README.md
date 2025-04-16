@@ -1,10 +1,11 @@
 # TinyPngCompress Plugin
 
-**TinyPngCompress** is a JetBrains IDE plugin that helps developers easily compress image files (e.g., PNG, JPEG) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
+**TinyPngCompress** is an Android Studio plugin that helps developers easily compress image files (e.g., PNG, JPEG) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
 
 ## ✨ Features
 
-- ✅ Compress PNG and JPEG images with TinyPNG API
+- ✅ Compress PNG and JPEG images with TinyPNG
+- ✅ Compatible with the latest Android Studio (version 2024.3 or newer)
 - ✅ Before/After image preview with compression ratio
 - ✅ Batch compression support via project file tree
 - ✅ Displays file size reduction and progress

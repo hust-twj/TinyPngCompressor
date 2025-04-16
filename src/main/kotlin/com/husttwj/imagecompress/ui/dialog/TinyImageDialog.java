@@ -1,10 +1,7 @@
 package com.husttwj.imagecompress.ui.dialog;
 
 
-import com.husttwj.imagecompress.listener.CancelActionListener;
-import com.husttwj.imagecompress.listener.ImageSelectListener;
-import com.husttwj.imagecompress.listener.ProcessActionListener;
-import com.husttwj.imagecompress.listener.SaveActionListener;
+import com.husttwj.imagecompress.listener.*;
 import com.husttwj.imagecompress.ui.components.JImage;
 import com.husttwj.imagecompress.util.*;
 import com.intellij.openapi.project.Project;
@@ -101,7 +98,7 @@ public class TinyImageDialog extends JDialog {
         mCompressedFileMap = compressMap;
 
         LogUtil.d(">>>>>>>>>> show TinyImageDialog start >>>>>>>>>>");
-        setTitle("TinyPng压缩图片");
+        setTitle("TinyPngCompressor");
         setContentPane(mContentPanel);
         getRootPane().setDefaultButton(mBtnProcess);
 
@@ -195,12 +192,12 @@ public class TinyImageDialog extends JDialog {
         mTitleBefore.setForeground(JBColor.green.darker());
         mTitleAfter.setForeground(JBColor.red.darker());
 
-        mTitleBefore.setText("压缩前");
-        mTitleAfter.setText("压缩后");
+        mTitleBefore.setText("Before Compress");
+        mTitleAfter.setText("After Compress");
 
-        mBtnSave.setText("保存");
-        mBtnCancel.setText("取消");
-        mBtnProcess.setText("压缩");
+        mBtnSave.setText("Save");
+        mBtnCancel.setText("Cancel");
+        mBtnProcess.setText("Compress");
 
         mDetailsAfter.setFont(new Font(mDetailsAfter.getFont().getName(), mDetailsAfter.getFont().getStyle(), 14));
         mDetailsBefore.setFont(new Font(mDetailsBefore.getFont().getName(), mDetailsBefore.getFont().getStyle(), 14));
@@ -228,11 +225,11 @@ public class TinyImageDialog extends JDialog {
 
     public void onCompressFinish() {
         mInCompressProgress = false;
-        mBtnProcess.setText("压缩");
+        mBtnProcess.setText("Compress");
         rootPane.setDefaultButton(mBtnSave);
         mBtnSave.setEnabled(true);
         mBtnProcess.setEnabled(true);
-        mBtnCancel.setText("取消");
+        mBtnCancel.setText("Cancel");
         long totalBytes = 0;
         mTotalSaveSize = 0;
         for (FileTreeNode node : mImageFileNodes) {

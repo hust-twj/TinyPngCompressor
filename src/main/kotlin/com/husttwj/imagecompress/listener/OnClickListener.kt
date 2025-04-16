@@ -1,4 +1,4 @@
-package com.husttwj.imagecompress.util
+package com.husttwj.imagecompress.listener
 
 interface OnClickListener {
 

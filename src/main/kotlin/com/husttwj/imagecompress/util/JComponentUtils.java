@@ -1,6 +1,8 @@
 package com.husttwj.imagecompress.util;
 
 
+import com.husttwj.imagecompress.listener.OnClickListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

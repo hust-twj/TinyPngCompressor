@@ -1,48 +1,14 @@
 package com.husttwj.imagecompress.util
 
 
-import com.intellij.openapi.util.IconLoader
 import com.luciad.imageio.webp.WebPReadParam
 import java.awt.Image
 import java.io.File
 import java.io.InputStream
 import javax.imageio.ImageIO
 import javax.imageio.stream.FileImageInputStream
-import javax.swing.Icon
 
 object ImageUtils {
-
-    private const val ACTION_ICON_SIZE = 16
-
-    @JvmStatic
-    fun isImageFile(fileName: String?): Boolean {
-        fileName ?: return false
-        return fileName.endsWith(".png")
-            || fileName.endsWith(".jpg")
-            || fileName.endsWith(".jpeg")
-            || fileName.endsWith(".gif")
-            || fileName.endsWith(".webp")
-    }
-
-//    @JvmOverloads
-//    @JvmStatic
-//    fun loadIcon(iconFileName: String, imageSize: Int? = ACTION_ICON_SIZE, path: String = "/images/"): Icon? {
-//        var loadImageFileName = iconFileName
-//        if (!iconFileName.endsWith("png") && !iconFileName.endsWith("svg")) {
-//            loadImageFileName = "$loadImageFileName.svg"
-//        }
-//        var findIcon = IconLoader.findIcon(path + loadImageFileName)
-//        if (imageSize != null && findIcon is IconLoader.CachedImageIcon && findIcon.iconWidth != imageSize) {
-//            findIcon = findIcon.scale(imageSize * 1.0f / findIcon.iconWidth)
-//        }
-//        if (imageSize != null && findIcon?.javaClass?.name == "com.intellij.openapi.util.CachedImageIcon" && findIcon.iconWidth != imageSize) {
-//            val scaleMethod = ReflectUtils.getClassMethod(findIcon.javaClass, "scale", Float::class.java)
-//            if (scaleMethod != null) {
-//                findIcon = scaleMethod.invoke(findIcon, imageSize * 1.0f / findIcon.iconWidth) as Icon
-//            }
-//        }
-//        return findIcon
-//    }
 
     @JvmStatic
     fun getImage(file: File?): Image? {
@@ -71,8 +37,6 @@ object ImageUtils {
             return ImageIO.read(inputStream)
         }
     }
-
-
 
 
 }
