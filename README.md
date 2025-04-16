@@ -43,15 +43,9 @@
 1. Build the plugin using Gradle:
    ```bash
    ./gradlew buildPlugin
-
 2. Find the output `.zip` file in `build/distributions/`
-
-
 3. Open IDE → Settings → Plugins → ⚙️ → Install Plugin from Disk
-
-
 4. Select the `.zip` file and restart the IDE
-
 
 
 ## 🧱 Project Structure
