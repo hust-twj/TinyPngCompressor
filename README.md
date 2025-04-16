@@ -59,3 +59,7 @@ src/
 
 ```
 
+## 🙏 Acknowledgement
+
+Special thanks to the [TinyPNG Image Optimizer](https://plugins.jetbrains.com/plugin/11573-tinypng-image-optimizer/reviews) plugin.  
+Although it's no longer compatible with the latest versions of Android Studio, its excellent design and functionality served as a valuable reference during the development of this plugin.
