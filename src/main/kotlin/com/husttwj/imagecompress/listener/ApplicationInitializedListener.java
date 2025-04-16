@@ -12,21 +12,11 @@ import java.util.*;
 
 public class ApplicationInitializedListener implements com.intellij.ide.ApplicationInitializedListener {
 
-    public static final int HINT_ITEM_HEIGHT = 24;
-
-    private String lastSelectText = null;
-
-    private static int maxWidth;
-
     @Override
     public void componentsInitialized() {
         FileUtils.init();
 
         registerVirtualFileListener();
-
-//        ThreadUtils.submit(() -> {
-//
-//        });
 
     }
 

@@ -26,8 +26,8 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                 hasError = false
                 var sleepTime: Long = 0
                 var count = 0
-                if (!File(FileUtils.sCodelocatorImageFileDirPath, dialog.processKey).exists()) {
-                    File(FileUtils.sCodelocatorImageFileDirPath, dialog.processKey).mkdir()
+                if (!File(FileUtils.sImageFileDirPath, dialog.processKey).exists()) {
+                    File(FileUtils.sImageFileDirPath, dialog.processKey).mkdir()
                 }
                 for (node in dialog.imageFileNodes) {
                     try {

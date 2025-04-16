@@ -1,4 +1,4 @@
-# ImageCompress Plugin
+# TinyPngCompress Plugin
 
 **TinyPngCompress** is a JetBrains IDE plugin that helps developers easily compress image files (e.g., PNG, JPEG) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
 

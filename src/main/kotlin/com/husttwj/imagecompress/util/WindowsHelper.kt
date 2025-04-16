@@ -10,26 +10,6 @@ class WindowsHelper : OSHelper() {
     override fun init() {
     }
 
-    override val currentIp: String
-        get() {
-            try {
-                val execCommand = execCommand("ipconfig")
-                val ips = execCommand.resultMsg!!.trim()
-                val ipv4Lines = StringUtils.grep(ips, "IPv4")
-                if (!ipv4Lines.isNullOrEmpty()) {
-                    for (line in ipv4Lines) {
-                        val matcher = StringUtils.sIpPattern.matcher(line)
-                        if (matcher.find()) {
-                            return matcher.group();
-                        }
-                    }
-                }
-            } catch (t: Throwable) {
-                LogUtil.e("Get current ip error", t)
-            }
-            return ""
-        }
-
     override val userName: String
         get() {
             try {

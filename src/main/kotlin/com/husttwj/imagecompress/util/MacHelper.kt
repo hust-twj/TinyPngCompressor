@@ -11,8 +11,8 @@ class MacHelper : OSHelper() {
 
     override fun init() {
         sCodeLocatorPluginShellPath =
-            FileUtils.sCodeLocatorPluginDir.replace(" ", "\\ ")
-        if (!File(FileUtils.sCodeLocatorPluginDir, "imgcopy").exists()) {
+            FileUtils.sPluginDir.replace(" ", "\\ ")
+        if (!File(FileUtils.sPluginDir, "imgcopy").exists()) {
             try {
                 execCommand("gcc -Wall -g -O3 -ObjC -framework Foundation -framework AppKit -o $sCodeLocatorPluginShellPath/imgcopy $sCodeLocatorPluginShellPath/imgcopy.m")
             } catch (ignore: Exception) {
@@ -90,21 +90,6 @@ class MacHelper : OSHelper() {
             return ""
         }
 
-    override val currentIp: String
-        get() {
-            try {
-                val execCommand = execCommand("ifconfig | grep broadcast | awk -F ' ' '{print $2}'")
-                val ips = execCommand.resultMsg!!.trim()
-                if (ips.contains("\n")) {
-                    return ips.split("\n")[0].trim()
-                } else {
-                    return ips.trim()
-                }
-            } catch (t: Throwable) {
-                LogUtil.e("Get current ip error", t)
-            }
-            return ""
-        }
 
     override val aaptFilePath: String
         get() {
@@ -119,12 +104,6 @@ class MacHelper : OSHelper() {
             return ""
         }
 
-//    override fun getToolbarHeight(codeLocatorWindow: CodeLocatorWindow): Int {
-//        if (codeLocatorWindow.toolsBarJComponent.componentCount > 0) {
-//            return codeLocatorWindow.toolsBarJComponent.height / codeLocatorWindow.toolsBarJComponent.componentCount
-//        }
-//        return Toolkit.getDefaultToolkit().getScreenInsets(codeLocatorWindow.graphicsConfiguration).top
-//    }
 
     override fun openCharles() {
         if (File("/Applications/Charles.app").exists()) {
@@ -138,13 +117,13 @@ class MacHelper : OSHelper() {
 
     override fun copyImageToClipboard(image: Image?): Boolean {
         val file =
-            File(FileUtils.sCodelocatorImageFileDirPath, "tmp.png")
+            File(FileUtils.sImageFileDirPath, "tmp.png")
         file.delete()
         FileUtils.saveImageToFile(image, file)
         if (file.exists() && file.length() > 0) {
             try {
                 val imgcopy = execCommand(
-                    File(FileUtils.sCodeLocatorPluginDir, "imgcopy").absolutePath.replace(" ", "\\ ") + " '" + file.absolutePath + "'"
+                    File(FileUtils.sPluginDir, "imgcopy").absolutePath.replace(" ", "\\ ") + " '" + file.absolutePath + "'"
                 )
                 file.delete()
                 return imgcopy.resultCode == 0

@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.husttwj.ImageCompress</id>
+    <id>com.husttwj.TinyPngCompressor</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -9,7 +9,7 @@
     <version>1.0.1</version>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="husttwj@163.com" url="http://husttwj.com">husttwj</vendor>
+    <vendor email="hust_twj@163.com" url="http://husttwj.com">husttwj</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -20,54 +20,30 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-<!--    <depends>com.intellij.modules.java</depends>-->
-
-<!--    <depends>org.jetbrains.kotlin</depends>-->
-
-<!--    <depends>org.jetbrains.android</depends>-->
-
-
-
-
-    <!-- 注册右键菜单 Action -->
-  <!--  <actions>
-        <action id="CompressImageAction"
-                class="com.husttwj.imagecompress.action.CompressImageAction"
-                text="Compress Image"
-                description="压缩选中的图片文件">
-            &lt;!&ndash; 限定只在图片文件上显示，可通过 FileType 对应的限制实现 &ndash;&gt;
-            <add-to-group group-id="FilePopupMenu" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
-        </action>
-    </actions>-->
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.husttwj.imagecompress.PluginGlobalSettings"/>
-       <!-- <errorHandler implementation="com.nvlad.tinypng.diagnostic.ErrorReportHandler"/>-->
-
-      <!--  <defaultProjectTypeProvider type="Android"/>-->
 
         <applicationInitializedListener
                 implementation="com.husttwj.imagecompress.listener.ApplicationInitializedListener"/>
 
         <!-- 设置页面 -->
-        <applicationConfigurable
+        <!--<applicationConfigurable
                 instance="com.husttwj.imagecompress.ui.settings.Settings"
                 displayName="Compress Image"
                 id="husttwj.TinyPNG"
-                groupId="tools"/>
+                groupId="tools"/>-->
     </extensions>
 
     <!-- 注册右键菜单动作 -->
     <actions>
         <action id="CompressImageAction"
                 class="com.husttwj.imagecompress.action.CompressAction"
-                text="Compress Image333"
+                text="Compress Image"
                 description="压缩选中的图片文件">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
         </action>
     </actions>
-
 
 </idea-plugin>

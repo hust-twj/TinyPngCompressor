@@ -107,9 +107,9 @@ public class TinyPng {
         response.body().close();
         InputStream inputStream = sOkHttpClient.newCall(new Request.Builder().get().url(uploadInfo.getOutput().getUrl()).build()).execute().body().byteStream();
         final String fileName = MD5Utils.getMD5(uploadInfo.getOutput().getUrl());
-        final File tmpfile = new File(FileUtils.sCodelocatorImageFileDirPath, parent + File.separator + fileName + "." + fileType + ".tmp");
+        final File tmpfile = new File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + "." + fileType + ".tmp");
         saveToFile(tmpfile.getAbsolutePath(), inputStream);
-        final File convertedFile = new File(FileUtils.sCodelocatorImageFileDirPath, parent + File.separator + fileName + "." + fileType);
+        final File convertedFile = new File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + "." + fileType);
         tmpfile.renameTo(convertedFile);
         uploadInfo.getOutput().setFile(convertedFile);
         return uploadInfo;

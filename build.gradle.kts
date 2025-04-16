@@ -3,18 +3,14 @@
 // 插件版本和 Kotlin 版本定义
 plugins {
     id("java")
-    // 应用 IntelliJ 插件开发的 Gradle 插件
+    // IntelliJ 插件开发的 Gradle 插件
     id("org.jetbrains.intellij") version "1.13.3"
-    // 应用 Kotlin JVM 插件
-  //  kotlin("jvm") version "1.9.22"
-
-
+    //  Kotlin JVM 插件
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    //id("org.jetbrains.intellij") version "1.17.4"
 }
 
 group = "com.husttwj"
-version = "1.8-SNAPSHOT"
+version = "1.15-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -24,19 +20,10 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-//    version.set("2024.3")
-//    type.set("IC") // Target IDE Platform
-//
-//    //
-//    plugins.set(listOf(/*"org.jetbrains.kotlin", */"org.jetbrains.android"))
-//
-//    // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
-//    version.set("2024.2.5")
-//    // 插件的名称
-//    pluginName.set("TinyPngCompressor")
-
-
+    // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
     version.set("2023.2.1.23")
+
+    //AI - Android Studio
     type.set("AI")
 
     plugins.set(listOf("org.jetbrains.android"))
@@ -59,8 +46,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     implementation("com.tinify:tinify:1.6.2")
-    // JUnit 5 测试框架
-    //testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 tasks {
@@ -78,11 +63,11 @@ tasks {
     }
 
     patchPluginXml {
-//        sinceBuild.set("242")
-//        untilBuild.set("252.*")
-
+        //最小兼容AS版本，对应 IntelliJ IDEA 2023.2 版本
         sinceBuild.set("232")
-        untilBuild.set("243.*")
+        //最大兼容AS版本，兼容 2024.3 系列的所有版本（包括小版本更新）
+        //untilBuild.set("243.*")
+        untilBuild.set("")  // 留空表示无上限
     }
 
     signPlugin {

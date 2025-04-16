@@ -6,10 +6,7 @@ import com.husttwj.imagecompress.listener.ImageSelectListener;
 import com.husttwj.imagecompress.listener.ProcessActionListener;
 import com.husttwj.imagecompress.listener.SaveActionListener;
 import com.husttwj.imagecompress.ui.components.JImage;
-import com.husttwj.imagecompress.util.FileUtils;
-import com.husttwj.imagecompress.util.JComponentUtils;
-import com.husttwj.imagecompress.util.OnClickListener;
-import com.husttwj.imagecompress.util.StringUtils;
+import com.husttwj.imagecompress.util.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.CheckboxTree;
@@ -34,6 +31,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ */
 public class TinyImageDialog extends JDialog {
 
     private JPanel mContentPanel;
@@ -100,6 +100,7 @@ public class TinyImageDialog extends JDialog {
         this.mProcessKey = (processKey == null ? getProjectImageStoreKey(project) : processKey);
         mCompressedFileMap = compressMap;
 
+        LogUtil.d(">>>>>>>>>> show TinyImageDialog start >>>>>>>>>>");
         setTitle("TinyPng压缩图片");
         setContentPane(mContentPanel);
         getRootPane().setDefaultButton(mBtnProcess);
@@ -135,7 +136,7 @@ public class TinyImageDialog extends JDialog {
     }
 
     private List<FileTreeNode> getAllNodes(FileTreeNode root) {
-        List<FileTreeNode> nodes = new LinkedList();
+        List<FileTreeNode> nodes = new LinkedList<>();
         Enumeration enumeration = root.children();
         while (enumeration.hasMoreElements()) {
             FileTreeNode node = (FileTreeNode) enumeration.nextElement();
@@ -149,8 +150,7 @@ public class TinyImageDialog extends JDialog {
     }
 
     public static String getProjectImageStoreKey(Project project) {
-        final String projectFilePath = project.getName() + "_" + System.currentTimeMillis();
-        return projectFilePath;
+        return project.getName() + "_" + System.currentTimeMillis();
     }
 
     public void setDialogSize(JFrame frame) {
@@ -165,11 +165,10 @@ public class TinyImageDialog extends JDialog {
         mSplitPanel.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider() {
                 return new BasicSplitPaneDivider(this) {
-                    private final int dashHeight = 30;
 
-                    private Color background = UIUtil.getPanelBackground();
+                    private final Color background = UIUtil.getPanelBackground();
 
-                    private Color dashes = JBUI.CurrentTheme.CustomFrameDecorations.separatorForeground();
+                    private final Color dashes = JBUI.CurrentTheme.CustomFrameDecorations.separatorForeground();
 
                     public void setBorder(Border b) {
                     }
@@ -179,6 +178,7 @@ public class TinyImageDialog extends JDialog {
                         g.setColor(background);
                         g.fillRect(0, 0, getSize().width, getSize().height);
 
+                        int dashHeight = 30;
                         final int top = (getSize().height - dashHeight) / 2;
                         g.setColor(dashes);
                         g.drawLine(4, top, 4, top + dashHeight);
@@ -189,6 +189,7 @@ public class TinyImageDialog extends JDialog {
             }
         });
 
+        mScrollPanel.setBorder(null);
         mSplitPanel.setBorder(null);
 
         mTitleBefore.setForeground(JBColor.green.darker());
@@ -211,7 +212,7 @@ public class TinyImageDialog extends JDialog {
 
         mImageFileNodes = getAllNodes((FileTreeNode) getFileTree().getModel().getRoot());
 
-        if (mCompressedFileMap != null && mCompressedFileMap.size() > 0) {
+        if (mCompressedFileMap != null && !mCompressedFileMap.isEmpty()) {
             for (FileTreeNode node : mImageFileNodes) {
                 final VirtualFile virtualFile = node.getVirtualFile();
                 if (mCompressedFileMap.containsKey(virtualFile)) {
@@ -305,7 +306,7 @@ public class TinyImageDialog extends JDialog {
     }
 
     private void createUIComponents() {
-        UIUtil.removeScrollBorder(mScrollPanel);
+
         mImageAfter = new JImage();
         mImageBefore = new JImage();
         mFileTree = new CheckboxTree(new FileCellRenderer(mProject), buildTree());
@@ -375,7 +376,7 @@ public class TinyImageDialog extends JDialog {
     @Override
     public void dispose() {
         super.dispose();
-        FileUtils.deleteFile(new File(FileUtils.sCodelocatorImageFileDirPath, getProcessKey()));
+        FileUtils.deleteFile(new File(FileUtils.sImageFileDirPath, getProcessKey()));
     }
 
 }
