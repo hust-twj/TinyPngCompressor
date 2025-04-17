@@ -42,7 +42,7 @@ Choose one of the following methods to install the plugin:
 
 ### Manual Installation(Pre-built Zip)
 
-1. Download `TinyPngCompressor-xxx.zip` from [release page](https://github.com/hust-twj/TinyPngCompress/releases)
+1. Download `TinyPngCompressor-xxx.zip` from [release page](https://github.com/hust-twj/TinyPngCompressor/releases)
 2. Go to **Settings → Plugins → ⚙️ → Install Plugin from Disk**
 3. Select the `.zip` file above and restart the IDE
 

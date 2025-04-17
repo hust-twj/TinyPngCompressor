@@ -10,7 +10,9 @@ plugins {
 }
 
 group = "com.husttwj"
-version = "1.1.5"
+//1. change version
+//2. update changelog in plugin.xml
+version = "1.1.6"
 
 repositories {
     mavenCentral()

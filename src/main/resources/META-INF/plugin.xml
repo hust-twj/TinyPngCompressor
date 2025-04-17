@@ -18,12 +18,12 @@
 
         Powered by <a href="https://tinypng.com/">TinyPNG</a>, the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.<br />
 
-        For more info, visit: <a href="https://github.com/hust-twj/TinyPngCompress">GitHub Repository</a>
+        For more info, visit: <a href="https://github.com/hust-twj/TinyPngCompressor">GitHub Repository</a>
     ]]></description>
 
 
     <change-notes><![CDATA[
-        <h4> 1.1.1(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
+        <h4> 1.1.6(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
 
     ]]></change-notes>
 
@@ -35,16 +35,9 @@
 
         <postStartupActivity implementation="com.husttwj.imagecompress.listener.CompressStartupActivity"/>
 
-
-        <!-- 设置页面 -->
-        <!--<applicationConfigurable
-                instance="com.husttwj.imagecompress.ui.settings.Settings"
-                displayName="Compress Image"
-                id="husttwj.TinyPNG"
-                groupId="tools"/>-->
     </extensions>
 
-    <!-- 注册右键菜单动作 -->
+    <!-- register right-click action -->
     <actions>
         <action id="CompressImageAction"
                 class="com.husttwj.imagecompress.action.CompressAction"
