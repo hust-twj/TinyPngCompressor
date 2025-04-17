@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.husttwj"
-version = "1.1.3"
+version = "1.1.5"
 
 repositories {
     mavenCentral()

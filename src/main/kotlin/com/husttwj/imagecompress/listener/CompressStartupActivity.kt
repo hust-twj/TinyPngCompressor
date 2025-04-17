@@ -6,7 +6,10 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.StartupActivity
 
 
-class CompressStartupActivity : StartupActivity.DumbAware {
+/**
+ * 使用 StartupActivity 或 ProjectActivity， 在应用启动时执行初始化逻辑
+ */
+class CompressStartupActivity : StartupActivity {
 
     override fun runActivity(project: Project) {
         FileUtils.init()
