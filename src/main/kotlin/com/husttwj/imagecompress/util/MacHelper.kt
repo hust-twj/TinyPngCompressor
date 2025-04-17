@@ -89,46 +89,6 @@ class MacHelper : OSHelper() {
             return ""
         }
 
-
-    override val aaptFilePath: String
-        get() {
-            val sdkFile = getAndroidSdkFile() ?: return ""
-            val file = File(sdkFile, "build-tools")
-            if (file.exists()) {
-                val aaptFile = FileUtils.findFileByName(file, "aapt", 3) { o1, o2 -> o2.name.compareTo(o1.name) }
-                if (aaptFile != null) {
-                    return aaptFile.absolutePath
-                }
-            }
-            return ""
-        }
-
-    override fun getApkPkgName(apkFilePath: String?): String? {
-        apkFilePath ?: return null
-        if (aaptFilePath.isEmpty()) {
-            return null
-        }
-        try {
-            val execCommand = execCommand(
-                "${aaptFilePath.replace(
-                    " ",
-                    "\\ "
-                )} dump badging '$apkFilePath' | grep package"
-            )
-            val line = execCommand.resultMsg ?: ""
-            val indexOfStart = line.indexOf("name='")
-            if (indexOfStart > -1) {
-                val indexOfEnd = line.indexOf("'", indexOfStart + "name='".length)
-                if (indexOfEnd > -1) {
-                    return line.substring(indexOfStart + "name='".length, indexOfEnd)
-                }
-            }
-        } catch (t: Throwable) {
-            LogUtil.e("getApkName Error", t)
-        }
-        return null
-    }
-
     override fun getGitUrlByPath(filePath: String): String {
         try {
             val execResult: ExecResult =

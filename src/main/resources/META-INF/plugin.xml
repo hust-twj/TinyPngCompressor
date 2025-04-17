@@ -23,7 +23,7 @@
 
 
     <change-notes><![CDATA[
-        <h4> 1.1.1(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
+        <h4> 1.1.2(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
 
     ]]></change-notes>
 
@@ -33,8 +33,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.husttwj.imagecompress.PluginGlobalSettings"/>
 
-        <applicationInitializedListener
-                implementation="com.husttwj.imagecompress.listener.CompressApplicationInitializedListener"/>
+      <!--  <applicationInitializedListener
+                implementation="com.husttwj.imagecompress.listener.CompressApplicationInitializedListener"/>-->
 
         <startupActivity implementation="com.husttwj.imagecompress.listener.CompressStartupActivity"/>
 
