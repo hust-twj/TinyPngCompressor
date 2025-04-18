@@ -1,11 +1,11 @@
 # TinyPngCompressor Plugin
 
-**TinyPngCompressor** is a Jetbrains plugin that helps developers easily compress image files (e.g., PNG, JPG) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
+**TinyPngCompressor** is a Jetbrains plugin that helps developers easily compress images (.png/.jpg/.jpeg) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
 
 ## ✨ Features
 
-- ✅ Compress PNG/JPG images with TinyPNG
-- ✅ Support the latest Android Studio (version 2024.3 or newer) and Intellij Idea
+- ✅ Compress images with TinyPNG
+- ✅ **Support the latest Android Studio (Meerkat | 2024.3 or newer) and Intellij Idea**
 - ✅ Before/After image preview with compression ratio
 - ✅ Batch compression support via project file tree
 - ✅ Displays file size reduction and progress
@@ -70,5 +70,5 @@ src/
 
 ## 🙏 Acknowledgement
 
-Special thanks to the [TinyPNG Image Optimizer](https://plugins.jetbrains.com/plugin/11573-tinypng-image-optimizer/reviews) plugin.  
-Although it's no longer compatible with the latest versions of Android Studio, its excellent design and functionality served as a valuable reference during the development of this plugin.
+Thanks to the [TinyPNG Image Optimizer](https://plugins.jetbrains.com/plugin/11573-tinypng-image-optimizer/reviews) plugin.  
+Although it's incompatible with Android Studio Meerkat | 2024.3, its excellent design and functionality served as a valuable reference.
