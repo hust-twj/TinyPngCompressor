@@ -6,26 +6,37 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * log dir: /Users/xxx/.tinypng_compressor_main/tinypng_compressor_log.txt
+ */
 public class LogUtil {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static SimpleDateFormat sSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static void d(String msg) {
-        d(msg, null);
-        System.out.print(msg);
+        String newMsg = "";
+        if (!msg.startsWith(">>>>> ")) {
+            newMsg =  ">>>>> "  + msg ;
+        }
+
+        d(newMsg, null);
+        System.out.print(newMsg);
     }
 
     public static void d(String msg, Throwable t) {
-        logWhenDebug(msg, t, false);
-        ThreadUtils.submitLog(() -> writeMsgToFile(msg, t));
+        String newMsg =  ">>>>> "  + msg ;
+
+        logWhenDebug(newMsg, t, false);
+        ThreadUtils.submitLog(() -> writeMsgToFile(newMsg, t));
     }
 
     public static void e(String msg, Throwable t) {
-        logWhenDebug(msg, t, true);
+        String newMsg =  ">>>>> "  + msg ;
+        logWhenDebug(newMsg, t, true);
         ThreadUtils.submitLog(() -> {
-            writeMsgToFile(msg, t);
+            writeMsgToFile(newMsg, t);
         });
     }
 

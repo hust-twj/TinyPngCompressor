@@ -40,7 +40,7 @@ intellij {
 // 配置依赖项
 dependencies {
     //libs
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    //implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // Kotlin 标准库
     implementation(kotlin("stdlib-jdk8"))
@@ -48,6 +48,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     implementation("com.tinify:tinify:1.6.2")
+
+    implementation("com.twelvemonkeys.imageio:imageio-webp:3.12.0")
+
 }
 
 tasks {

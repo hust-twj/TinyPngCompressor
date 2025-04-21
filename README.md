@@ -1,6 +1,6 @@
 # TinyPngCompressor Plugin
 
-**TinyPngCompressor** is a Jetbrains plugin that helps developers easily compress images (.png/.jpg/.jpeg) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
+[TinyPngCompressor](https://plugins.jetbrains.com/plugin/27085-tinypngcompressor/) is a Jetbrains plugin that helps developers easily compress images (.png/.jpg/.jpeg/.webP) directly within the IDE. Powered by [TinyPNG](https://tinypng.com/), the plugin provides a visual interface for compressing images, previewing before/after comparisons, and managing file compression in batch.
 
 ## ✨ Features
 

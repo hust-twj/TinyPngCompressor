@@ -1,6 +1,7 @@
 package com.husttwj.imagecompress.ui.components
 
 import com.husttwj.imagecompress.util.ImageUtils
+import com.husttwj.imagecompress.util.LogUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.JBColor
 import com.intellij.util.ui.UIUtil
@@ -38,11 +39,14 @@ class JImage : JPanel() {
 
     @Throws(IOException::class)
     private fun setImageInner(file: File?) {
+        LogUtil.d("setImageInner: name=${(file?.name)}  null=${(file == null )} exists=${file?.exists()}  path= ${file?.path}")
         if (file == null || !file.exists()) {
             image = null
             imageSize = 0
         } else {
+            LogUtil.d("setImageInner->getImage start: ")
             image = ImageUtils.getImage(file) as? BufferedImage?
+            LogUtil.d("setImageInner->getImage end:  name=${(file.name)}  null=${image == null}  width=${image?.width}   height=${image?.height}  path= ${file.path}")
             imageSize = file.length()
         }
         if (image != null) {
