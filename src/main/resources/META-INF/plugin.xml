@@ -21,10 +21,11 @@
         For more info, visit: <a href="https://github.com/hust-twj/TinyPngCompressor">GitHub Repository</a>
     ]]></description>
 
-
     <change-notes><![CDATA[
-        <h4> 1.1.6(2025.4): Support latest Android Studio(Android Studio Meerkat | 2024.3) </h3>
-
+        <ul>
+            <li><b>1.1.7 (2025.04)</b>: Support <code>WebP</code> image compression and preview.</li>
+            <li><b>1.1.6 (2025.04)</b>: Compatible with Android Studio Meerkat (2024.3) or newer.</li>
+        </ul>
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
