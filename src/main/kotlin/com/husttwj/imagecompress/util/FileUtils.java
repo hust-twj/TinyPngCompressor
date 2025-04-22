@@ -46,6 +46,7 @@ public class FileUtils {
         initLogFile();
         initPluginInstallPath();
         OSHelper.getInstance().init();
+        LogUtil.d("FileUtils init success");
     }
 
     private static ProjectConfig sProjectConfig;
@@ -207,7 +208,7 @@ public class FileUtils {
                 return new String(fileContentBytes, CHARSET_NAME);
             }
         } catch (Exception e) {
-            LogUtil.e("读取文件失败 " + file.getAbsolutePath(), e);
+            LogUtil.e("read file error: " + file.getAbsolutePath(), e);
         }
         return "";
     }
@@ -223,7 +224,7 @@ public class FileUtils {
             in.close();
             return fileBytes;
         } catch (Exception e) {
-            LogUtil.e("读取文件失败 " + file.getAbsolutePath(), e);
+            LogUtil.e("read file error: " + file.getAbsolutePath(), e);
         }
         return null;
     }

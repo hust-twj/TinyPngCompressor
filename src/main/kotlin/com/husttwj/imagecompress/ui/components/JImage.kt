@@ -39,14 +39,14 @@ class JImage : JPanel() {
 
     @Throws(IOException::class)
     private fun setImageInner(file: File?) {
-        LogUtil.d("setImageInner: name=${(file?.name)}  null=${(file == null )} exists=${file?.exists()}  path= ${file?.path}")
+       // LogUtil.d("setImageInner: name=${(file?.name)}  null=${(file == null )} exists=${file?.exists()}  path= ${file?.path}")
         if (file == null || !file.exists()) {
             image = null
             imageSize = 0
         } else {
-            LogUtil.d("setImageInner->getImage start: ")
+           // LogUtil.d("setImageInner->getImage start: ")
             image = ImageUtils.getImage(file) as? BufferedImage?
-            LogUtil.d("setImageInner->getImage end:  name=${(file.name)}  null=${image == null}  width=${image?.width}   height=${image?.height}  path= ${file.path}")
+           // LogUtil.d("setImageInner->getImage end:  name=${(file.name)}  null=${image == null}  width=${image?.width}   height=${image?.height}  path= ${file.path}")
             imageSize = file.length()
         }
         if (image != null) {

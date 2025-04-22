@@ -17,20 +17,20 @@ public class TinyPng {
 
     private static OkHttpClient initOkHttpClient() {
         final TrustManager[] trustAllCerts = new TrustManager[]{
-            new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
+                new X509TrustManager() {
+                    @Override
+                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                    }
 
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
+                    @Override
+                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                    }
 
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return new java.security.cert.X509Certificate[]{};
+                    @Override
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return new java.security.cert.X509Certificate[]{};
+                    }
                 }
-            }
         };
         SSLSocketFactory sslSocketFactory = null;
         try {
@@ -43,9 +43,9 @@ public class TinyPng {
         }
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS);
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS);
         if (sslSocketFactory != null) {
             builder.sslSocketFactory(sslSocketFactory, getX509TrustManager());
             builder.hostnameVerifier(getHostnameVerifier());
@@ -75,6 +75,7 @@ public class TinyPng {
 
     /**
      * 将本地图片文件上传到tinypng 压缩服务，获取压缩后的图片下载地址，然后下载压缩后的图片并保存到本地
+     *
      * @param parent
      * @param sourceFile
      * @return
@@ -91,13 +92,15 @@ public class TinyPng {
         head.put("Content-Type", type);
         head.put("referer", "https://tinypng.com/");
         head.put("origin", "https://tinypng.com");
-        head.put("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36");
+        String ua = UserAgentUtil.INSTANCE.getUserAgent();
+        LogUtil.d("ua=" + ua);
+        head.put("user-agent", ua);
         Request.Builder requestBuilder = new Request.Builder()
-            .url(FileUtils.getConfig().getTinyUrl())
-            .post(RequestBody.create(MediaType.parse(type), sourceFile));
+                .url(FileUtils.getConfig().getTinyUrl())
+                .post(RequestBody.create(MediaType.parse(type), sourceFile));
         if (FileUtils.getConfig().tinyHeadName != null
-            && FileUtils.getConfig().tinyHeadValue != null
-            && (FileUtils.getConfig().tinyHeadName.size() == FileUtils.getConfig().tinyHeadValue.size())) {
+                && FileUtils.getConfig().tinyHeadValue != null
+                && (FileUtils.getConfig().tinyHeadName.size() == FileUtils.getConfig().tinyHeadValue.size())) {
             for (int i = 0; i < FileUtils.getConfig().tinyHeadValue.size(); i++) {
                 head.put(FileUtils.getConfig().tinyHeadName.get(i), FileUtils.getConfig().tinyHeadValue.get(i));
             }
