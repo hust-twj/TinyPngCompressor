@@ -12,7 +12,7 @@ plugins {
 group = "com.husttwj"
 //1. change version
 //2. update changelog in plugin.xml
-version = "1.1.7"
+version = "1.1.8"
 
 repositories {
     mavenCentral()
@@ -23,7 +23,7 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
-    version.set("2023.2.1.23")
+    version.set("2023.1.1.27")
 
     //AI - Android Studio
     type.set("AI")
@@ -69,7 +69,7 @@ tasks {
 
     patchPluginXml {
         //最小兼容AS版本，对应 IntelliJ IDEA 2023.2 版本
-        sinceBuild.set("232")
+        sinceBuild.set("231")
         //最大兼容AS版本，兼容 2024.3 系列的所有版本（包括小版本更新）
         //untilBuild.set("243.*")
         untilBuild.set("")  // 留空表示无上限
