@@ -10,7 +10,7 @@ import com.intellij.openapi.wm.WindowManager
 import java.util.function.Predicate
 
 /**
- * 鼠标右键，出现图片压缩入口和弹窗
+ *  register right-click action
  */
 class CompressAction : AnAction() {
 

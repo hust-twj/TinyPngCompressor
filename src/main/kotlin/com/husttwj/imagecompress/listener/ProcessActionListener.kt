@@ -22,6 +22,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
         ThreadUtils.submit {
             var hasError: Boolean
             var repeatCount = 0
+            var errorMessage = ""
             do {
                 hasError = false
                 var sleepTime: Long = 0
@@ -53,6 +54,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                         }
                         node.error = throwable
                         hasError = true
+                        errorMessage = (throwable.message ?: "")
                     }
                     ThreadUtils.runOnUIThread {
                         (dialog.fileTree.model as DefaultTreeModel).nodeChanged(node)
@@ -71,7 +73,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                     dialog.rootPane.defaultButton = dialog.btnProcess
                     Messages.showMessageDialog(
                         dialog.contentPane,
-                        "Compress error",
+                        "Compress error:${errorMessage}",
                         "TinyPng Compress",
                         Messages.getInformationIcon()
                     )

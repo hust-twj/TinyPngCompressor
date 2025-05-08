@@ -23,6 +23,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li><b>1.1.9 </b>: Increase plugin compatibility.</li>
             <li><b>1.1.8 </b>: Bug fix.</li>
             <li><b>1.1.7 </b>: Support <code>WebP</code> image compression and preview.</li>
             <li><b>1.1.6 </b>: Compatible with Android Studio Meerkat (2024.3) or newer.</li>
@@ -35,7 +36,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.husttwj.imagecompress.PluginGlobalSettings"/>
 
-        <postStartupActivity implementation="com.husttwj.imagecompress.listener.CompressStartupActivity"/>
+        <postStartupActivity implementation="com.husttwj.imagecompress.start.CompressStartupActivity"/>
 
     </extensions>
 
@@ -51,4 +52,10 @@
         </action>
     </actions>
 
+    <application-components>
+        <component>
+            <implementation-class>com.husttwj.imagecompress.start.PluginApplicationComponent</implementation-class>
+            <interface-class>com.husttwj.imagecompress.start.PluginApplicationComponent</interface-class>
+        </component>
+    </application-components>
 </idea-plugin>
