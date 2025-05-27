@@ -43,14 +43,23 @@
     <!-- register right-click action -->
     <actions>
         <action id="ProjectViewAction"
-                class="com.husttwj.imagecompress.action.CompressAction"
+                class="com.husttwj.imagecompress.action.ProjectViewCompressAction"
                 text="Compress Image"
                 icon="/icons/compress-image.svg"
                 description="Compress selected images">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
+        </action>
+
+        <action id="TabEditorAction"
+                class="com.husttwj.imagecompress.action.TabEditorCompressAction"
+                text="Compress Image"
+                icon="/icons/compress-image.svg"
+                description="Compress selected images">
             <add-to-group group-id="EditorTabPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
         </action>
+
 
     </actions>
 
