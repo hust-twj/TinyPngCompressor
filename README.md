@@ -17,6 +17,9 @@
 
 ![guide 2](images/guide_2.png)
 
+![guide 3](images/guide_3.png)
+
+![guide 4](images/guide_4.png)
 
 ## 🛠 How to Use
 
