@@ -23,6 +23,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li><b>1.2.0 </b>: Optimize menu item position.</li>
             <li><b>1.1.9 </b>: Support image compression entry in <code>Editor Tab</code> right-click menu.</li>
             <li><b>1.1.8 </b>: Bug fix.</li>
             <li><b>1.1.7 </b>: Support <code>WebP</code> image compression and preview.</li>
@@ -42,24 +43,23 @@
 
     <!-- register right-click action -->
     <actions>
-        <action id="ProjectViewAction"
+        <action id="CompressProjectViewAction"
                 class="com.husttwj.imagecompress.action.ProjectViewCompressAction"
                 text="Compress Image"
                 icon="/icons/compress-image.svg"
                 description="Compress selected images">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>/>
+            <override-text place="Actions.ProjectViewPopupMenu" text="Compress Image"/>
+
         </action>
 
-        <action id="TabEditorAction"
+        <action id="CompressTabEditorAction"
                 class="com.husttwj.imagecompress.action.TabEditorCompressAction"
                 text="Compress Image"
                 icon="/icons/compress-image.svg"
                 description="Compress selected images">
-            <add-to-group group-id="EditorTabPopupMenu" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift C"/>
+            <add-to-group group-id="EditorTabPopupMenu" anchor="last"/>/>
         </action>
-
 
     </actions>
 
