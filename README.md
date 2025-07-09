@@ -9,6 +9,7 @@
 - ✅ Before/After image preview with compression ratio
 - ✅ Batch compression support via project file tree
 - ✅ Displays file size reduction and progress
+- ✅ Automatically detect pasted or copied images
 - ✅ Smart filtering to skip already compressed images
 - ✅ Easy-to-use, intuitive UI inside your IDE
 
