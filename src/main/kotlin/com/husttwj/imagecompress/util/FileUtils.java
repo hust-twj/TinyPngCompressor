@@ -4,7 +4,6 @@ package com.husttwj.imagecompress.util;
 import com.husttwj.imagecompress.model.ProjectConfig;
 import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.extensions.PluginId;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import org.jetbrains.annotations.NotNull;
@@ -96,7 +95,6 @@ public class FileUtils {
         }
         return result;
     }
-
 
     private static void initPluginInstallPath() {
         File pluginPath = PluginManager.getPlugin(PluginId.getId("com.husttwj.TinyPngCompressor")).getPath();
@@ -258,62 +256,6 @@ public class FileUtils {
         }
     }
 
-    public static File findFileByName(File root, String findFileName, int maxLevel, Comparator<File> fileComparator) {
-        return findFileByName(root, findFileName, maxLevel, 0, fileComparator);
-    }
-
-    private static File findFileByName(File rootFile, String findFileName, int maxLevel, int currentLevel, Comparator<File> fileComparator) {
-        if (findFileName == null) {
-            return null;
-        }
-        if (findFileName.equals(rootFile.getName())) {
-            return rootFile;
-        }
-        if (rootFile.isDirectory()) {
-            final File[] files = rootFile.listFiles();
-            if (files == null) {
-                return null;
-            }
-            final List<File> fileList = Arrays.asList(files);
-            if (fileComparator != null) {
-                fileList.sort(fileComparator);
-            }
-            for (File f : fileList) {
-                if (maxLevel < 0 || currentLevel < maxLevel) {
-                    File file = findFileByName(f, findFileName, maxLevel, currentLevel + 1, fileComparator);
-                    if (file != null) {
-                        return file;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    private static HashMap<String, String> sProjectGitUrlMap = new HashMap<>();
-
-    public static String getProjectGitUrl(String projectPath) {
-        if (projectPath == null || projectPath.isEmpty()) {
-            return projectPath;
-        }
-        final String gitUrl = sProjectGitUrlMap.get(projectPath);
-        if (gitUrl != null && !gitUrl.isEmpty()) {
-            return gitUrl;
-        }
-        if (!new File(projectPath, ".git").exists()) {
-            return projectPath;
-        }
-        final String gitUrlByPath = OSHelper.getInstance().getGitUrlByPath(projectPath);
-        if (!gitUrlByPath.isEmpty()) {
-            sProjectGitUrlMap.put(projectPath, gitUrlByPath);
-        }
-        return gitUrlByPath;
-    }
-
-    public static String getProjectGitUrl(Project project) {
-        return getProjectGitUrl(FileUtils.getProjectFilePath(project));
-    }
-
     @NotNull
     public static ByteArrayOutputStream readByteArrayOutputStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream;
@@ -335,21 +277,6 @@ public class FileUtils {
             }
         }
         return byteArrayOutputStream;
-    }
-
-    private static HashMap<String, String> sProjectPathMap = new HashMap<>();
-
-    public static String getProjectFilePath(Project project) {
-        String path = sProjectPathMap.get(project.getBasePath());
-        if (path != null) {
-            return path;
-        }
-        if (project.getBasePath() == null) {
-            return "";
-        }
-        path = new File(project.getBasePath()).getAbsolutePath();
-        sProjectPathMap.put(project.getBasePath(), path);
-        return path;
     }
 
 }

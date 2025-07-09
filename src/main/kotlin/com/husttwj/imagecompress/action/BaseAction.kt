@@ -13,13 +13,13 @@ abstract class BaseAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
 
-        val project = e.project
+        val project = e.project ?: return
 
         val roots = PlatformDataKeys.VIRTUAL_FILE_ARRAY.getData(e.dataContext) ?: return
         val list = FileUtils.getMatchFileList(roots, sPredicate, false)
         val frame = WindowManager.getInstance().getFrame(project) ?: return
 
-        val dialog = TinyImageDialog(project!!, list, listOf(*roots), false, null, null)
+        val dialog = TinyImageDialog(project, list, listOf(*roots), false, null, null)
         dialog.setDialogSize(frame)
         dialog.isVisible = true
         dialog.isAlwaysOnTop = false
