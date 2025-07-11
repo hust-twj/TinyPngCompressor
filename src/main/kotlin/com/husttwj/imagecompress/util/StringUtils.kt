@@ -1,31 +1,31 @@
-package com.husttwj.imagecompress.util;
+package com.husttwj.imagecompress.util
 
 
-public class StringUtils {
+object StringUtils {
 
-    public static String getFileSize(long fileSize) {
-        return getFileSize(fileSize, false);
+    fun getFileSize(fileSize: Long): String {
+        return getFileSize(fileSize, false)
     }
 
-    public static String getFileSize(long fileSize, boolean withOriginSize) {
-        String unit = "B";
-        float size = 0;
+    @JvmStatic
+    fun getFileSize(fileSize: Long, withOriginSize: Boolean): String {
+        var unit = "B"
+        var size: Float
         if (fileSize < 1000) {
-            size = fileSize;
+            size = fileSize.toFloat()
         } else if (fileSize < 1000L * 1000L) {
-            unit = "KB";
-            size = (1.0f * fileSize / (1000L));
+            unit = "KB"
+            size = (1.0f * fileSize / (1000L))
         } else if (fileSize < 1000L * 1000L * 1000L) {
-            unit = "M";
-            size = (1.0f * fileSize / (1000L * 1000L));
+            unit = "M"
+            size = (1.0f * fileSize / (1000L * 1000L))
         } else if (fileSize < 1000L * 1000L * 1000L * 1000L) {
-            unit = "G";
-            size = (1.0f * fileSize / (1000L * 1000L * 1000L));
+            unit = "G"
+            size = (1.0f * fileSize / (1000L * 1000L * 1000L))
         } else {
-            unit = "T";
-            size = (1.0f * fileSize / (1000L * 1000L * 1000L * 1000L));
+            unit = "T"
+            size = (1.0f * fileSize / (1000L * 1000L * 1000L * 1000L))
         }
-        return String.format("%.1f", size) + unit + (withOriginSize ? (" (" + fileSize + "B)") : "");
+        return String.format("%.1f", size) + unit + (if (withOriginSize) (" (" + fileSize + "B)") else "")
     }
-
 }

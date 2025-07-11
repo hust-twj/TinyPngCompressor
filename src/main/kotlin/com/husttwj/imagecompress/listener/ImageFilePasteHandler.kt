@@ -1,9 +1,6 @@
 package com.husttwj.imagecompress.listener
 
 import com.husttwj.imagecompress.ui.dialog.TinyImageDialog
-import com.intellij.notification.NotificationGroupManager
-import com.intellij.notification.NotificationType
-import com.intellij.notification.Notifications
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -55,7 +52,7 @@ object ImageFilePasteHandler {
     }
 
     /**
-     * Display the TinyImageDialog  to preview and compress the image files.
+     * Display the TinyImageDialog to preview and compress the image files.
      */
     private fun showCompressDialog(project: Project, files: List<VirtualFile>) {
         ApplicationManager.getApplication().invokeLater {

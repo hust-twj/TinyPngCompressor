@@ -1,32 +1,33 @@
-package com.husttwj.imagecompress.util;
+package com.husttwj.imagecompress.util
+
+import com.husttwj.imagecompress.listener.OnClickListener
+import java.awt.Dimension
+import java.awt.Toolkit
+import java.awt.event.ActionEvent
+import java.awt.event.KeyEvent
+import javax.swing.AbstractAction
+import javax.swing.JComponent
+import javax.swing.KeyStroke
 
 
-import com.husttwj.imagecompress.listener.OnClickListener;
+object JComponentUtils {
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-public class JComponentUtils {
-
-    public static void setSize(JComponent jComponent, int width, int height) {
-        jComponent.setMinimumSize(new Dimension(width, height));
-        jComponent.setMaximumSize(new Dimension(width, height));
-        jComponent.setPreferredSize(new Dimension(width, height));
-        jComponent.setSize(new Dimension(width, height));
+    @JvmStatic
+    fun setSize(jComponent: JComponent, width: Int, height: Int) {
+        jComponent.minimumSize = Dimension(width, height)
+        jComponent.maximumSize = Dimension(width, height)
+        jComponent.preferredSize = Dimension(width, height)
+        jComponent.size = Dimension(width, height)
     }
 
-    public static void supportCommandW(JComponent component, OnClickListener onClickListener) {
-        KeyStroke closeKey = KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
-        component.getInputMap().put(closeKey, "closeWindow");
-        component.getActionMap().put("closeWindow", new AbstractAction("Close Window") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (onClickListener != null) {
-                    onClickListener.onClick();
-                }
+    @JvmStatic
+    fun supportCommandW(component: JComponent, onClickListener: OnClickListener?) {
+        val closeKey = KeyStroke.getKeyStroke(KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask())
+        component.inputMap.put(closeKey, "closeWindow")
+        component.actionMap.put("closeWindow", object : AbstractAction("Close Window") {
+            override fun actionPerformed(e: ActionEvent?) {
+                onClickListener?.onClick()
             }
-        });
+        })
     }
 }

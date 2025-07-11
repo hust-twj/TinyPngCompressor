@@ -31,12 +31,14 @@ class CompressStartupActivity : ProjectActivity {
             override fun after(events: List<VFileEvent>) {
                 for (event in events) {
                     if (event is VFileCopyEvent) {
-                        val targetParent = event.newParent
-                        val newName = event.newChildName
-                        //find copied image file
-                        val copiedFile = targetParent.findChild(newName) ?: continue
+                        val originalFile = event.file
+                        //Ignore images copied within the same project.
+                        if (isFileInProject(project, originalFile)) continue
 
-                        // other project should ignore
+                        //find copied image file
+                        val copiedFile = event.newParent.findChild(event.newChildName) ?: continue
+                        // When multiple projects are open, only the target project will respond;
+                        // all other projects will ignore the event.
                         if (!isFileInProject(project, copiedFile)) continue
 
                         if (BaseAction.sPredicate.test(copiedFile)) {
@@ -52,8 +54,6 @@ class CompressStartupActivity : ProjectActivity {
         val basePath = project.basePath ?: return false
         return FileUtil.isAncestor(basePath, file.path, false)
     }
-
-
 
 }
 

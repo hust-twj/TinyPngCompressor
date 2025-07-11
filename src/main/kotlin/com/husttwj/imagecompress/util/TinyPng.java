@@ -74,7 +74,7 @@ public class TinyPng {
     }
 
     /**
-     * 将本地图片文件上传到tinypng 压缩服务，获取压缩后的图片下载地址，然后下载压缩后的图片并保存到本地
+     * Upload local images to TinyPNG, retrieve the compressed image URL, and save the compressed image to local.
      *
      * @param parent
      * @param sourceFile
