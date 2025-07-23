@@ -305,7 +305,6 @@ public class TinyImageDialog extends JDialog {
     }
 
     private void createUIComponents() {
-
         mImageAfter = new JImage();
         mImageBefore = new JImage();
         mFileTree = new CheckboxTree(new FileCellRenderer(mProject), buildTree());

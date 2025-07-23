@@ -21,11 +21,7 @@ class FileCellRenderer(private val myProject: Project) : CheckboxTreeCellRendere
         val node = value as? FileTreeNode ?: return
         val file = node.virtualFile ?: return
         val renderer = textRenderer
-        renderer.icon = IconUtil.getIcon(
-            file,
-            Iconable.ICON_FLAG_VISIBILITY,
-            myProject
-        )
+        renderer.icon = IconUtil.getIcon(file, Iconable.ICON_FLAG_VISIBILITY, myProject)
         renderer.append(file.name)
         if (node.compressedImageFile != null) {
             var optimized = 100 - node.compressedImageFile!!.length() * 100 / file.length

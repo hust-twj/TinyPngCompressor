@@ -25,11 +25,7 @@ class ImageSelectListener(private val myDialog: TinyImageDialog) : TreeSelection
     }
 
     @Throws(IOException::class)
-    private fun updateImage(
-        imagePanel: JImage,
-        detailsLabel: JLabel,
-        file: VirtualFile
-    ) {
+    private fun updateImage(imagePanel: JImage, detailsLabel: JLabel, file: VirtualFile) {
         if (file.isDirectory) {
             imagePanel.setImage(null as VirtualFile?)
         } else {
