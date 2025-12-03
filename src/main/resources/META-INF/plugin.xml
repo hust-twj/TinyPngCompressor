@@ -23,6 +23,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li><b>1.2.3 </b>: Support IntelliJ IDEA Community Edition.</li>
             <li><b>1.2.2 </b>: Bug fix.</li>
             <li><b>1.2.1 </b>: Automatically detect pasted or copied images.</li>
             <li><b>1.2.0 </b>: Optimize menu item position.</li>

@@ -12,7 +12,7 @@ plugins {
 group = "com.husttwj"
 //1. change version
 //2. update changelog in plugin.xml
-version = "1.2.2"
+version = "1.2.3"
 
 repositories {
     mavenCentral()
@@ -23,18 +23,21 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     // 指定插件要兼容的 IntelliJ 平台版本，这里选择 Android Studio 对应的版本
-    version.set("2023.1.1.27")
+    version.set("2023.1.5")
 
-    //AI - Android Studio
-    type.set("AI")
+    //AI--Android Studio; IC--IntelliJ IDEA Community Edition
+    type.set("IC")
 
     plugins.set(listOf("org.jetbrains.android"))
 
     // 插件的名称
     pluginName.set("TinyPngCompressor")
 
-    //    // 发布渠道，这里设置为默认渠道
-//    updateSinceUntilBuild.set(false)
+    // https://yoncise.com/logs/2022/08/03/88356600/
+    // 将插件的版本兼容，只设置最低，不做最高版本限制，需要改两个地方
+    // 1.updateSinceUntilBuild.set(false) 设置为FALSE
+    // 2.patchPluginXml 任务里移除 untilBuild 的设置
+    updateSinceUntilBuild.set(false)
 }
 
 // 配置依赖项
