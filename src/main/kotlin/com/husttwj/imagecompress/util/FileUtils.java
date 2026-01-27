@@ -70,6 +70,10 @@ public class FileUtils {
         }
     }
 
+    public static void resetConfig() {
+        sProjectConfig = null;
+    }
+
     public static List<VirtualFile> getMatchFileList(VirtualFile[] files, Predicate<VirtualFile> predicate, boolean breakWhenFoundOne) {
         List<VirtualFile> result = new LinkedList<>();
         if (files == null) {
@@ -253,6 +257,20 @@ public class FileUtils {
             file.delete();
         } else {
             file.delete();
+        }
+    }
+
+    public static void writeFileContent(File file, String content) {
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(content);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            LogUtil.e("write file error: " + file.getAbsolutePath(), e);
         }
     }
 

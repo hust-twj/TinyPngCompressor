@@ -23,6 +23,7 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li><b>1.2.4 </b>: Add configuration option for auto-detecting copied images in settings.</li>
             <li><b>1.2.3 </b>: Support IntelliJ IDEA Community Edition.</li>
             <li><b>1.2.2 </b>: Bug fix.</li>
             <li><b>1.2.1 </b>: Automatically detect pasted or copied images.</li>
@@ -40,6 +41,13 @@
     <extensions defaultExtensionNs="com.intellij">
 
         <postStartupActivity implementation="com.husttwj.imagecompress.listener.CompressStartupActivity"/>
+
+        <projectConfigurable
+                id="TinyPngSettings"
+                key="settings.displayName"
+                bundle="messages.TinyPngBundle"
+                groupId="tools"
+                instance="com.husttwj.imagecompress.ui.settings.TinyPngSettings"/>
 
     </extensions>
 

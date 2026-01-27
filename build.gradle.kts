@@ -12,7 +12,7 @@ plugins {
 group = "com.husttwj"
 //1. change version
 //2. update changelog in plugin.xml
-version = "1.2.3"
+version = "1.2.4"
 
 repositories {
     mavenCentral()
@@ -53,6 +53,8 @@ dependencies {
     implementation("com.tinify:tinify:1.6.2")
 
     implementation("com.twelvemonkeys.imageio:imageio-webp:3.12.0")
+
+    implementation("com.google.code.gson:gson:2.10.1")
 
 }
 
