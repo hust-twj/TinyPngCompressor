@@ -36,7 +36,7 @@ class TinyPngSettings(private val project: Project) : Configurable {
             config?.isAutoDetectImage() ?: true
         )
 
-        // DSL 面板
+        // DSL 创建设置面板
         return panel {
             row {
                 cell(autoDetectImageCheckBox)
@@ -52,10 +52,10 @@ class TinyPngSettings(private val project: Project) : Configurable {
     override fun apply() {
         val newValue = autoDetectImageCheckBox.isSelected
 
-        // 1️⃣ 更新内存中的配置
+        // 更新内存中的配置
         config?.setAutoDetectImage(newValue)
 
-        // 2️⃣ 持久化到文件
+        // 持久化到文件
         val configFile = File(FileUtils.sMainDirPath, FileUtils.CONFIG_INFO_FILE_NAME)
         try {
             val configContent = GsonUtils.sGson.toJson(config)
@@ -64,16 +64,14 @@ class TinyPngSettings(private val project: Project) : Configurable {
             e.printStackTrace()
         }
 
-        // 3️⃣ 立即刷新全局配置
-        FileUtils.resetConfig() // 确保 FileUtils.getConfig() 返回最新配置
+        // 立即刷新全局配置，确保 FileUtils.getConfig() 返回最新配置
+        FileUtils.resetConfig()
 
-        // 2. [核心修改] 获取 Service 并根据新状态决定开启或关闭
+        // 获取 Service 并根据新状态决定开启或关闭监听
         val listenerService = project.getService(VirtualFileListenerService::class.java)
         if (newValue) {
-            // 用户开启了开关 -> 启动监听
             listenerService.startListening()
         } else {
-            // 用户关闭了开关 -> 停止监听
             listenerService.stopListening()
         }
     }
