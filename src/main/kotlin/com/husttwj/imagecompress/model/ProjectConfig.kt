@@ -5,6 +5,8 @@ class ProjectConfig {
 
     private var tinyUrl: String? = null
 
+    private var tinifyApiKeys: MutableList<TinifyApiKeyConfig>? = null
+
     @JvmField
     val tinyHeadName: List<String>? = null
 
@@ -30,5 +32,16 @@ class ProjectConfig {
 
     fun setAutoDetectImage(autoDetectImage: Boolean) {
         this.autoDetectImage = autoDetectImage
+    }
+
+    fun getTinifyApiKeys(): MutableList<TinifyApiKeyConfig> {
+        if (tinifyApiKeys == null) {
+            tinifyApiKeys = mutableListOf()
+        }
+        return tinifyApiKeys!!
+    }
+
+    fun setTinifyApiKeys(tinifyApiKeys: MutableList<TinifyApiKeyConfig>?) {
+        this.tinifyApiKeys = tinifyApiKeys ?: mutableListOf()
     }
 }

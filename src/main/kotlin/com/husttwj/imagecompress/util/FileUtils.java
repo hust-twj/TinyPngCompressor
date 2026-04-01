@@ -74,6 +74,12 @@ public class FileUtils {
         sProjectConfig = null;
     }
 
+    public static synchronized void saveConfig(ProjectConfig config) {
+        final File configFile = new File(FileUtils.sMainDirPath, FileUtils.CONFIG_INFO_FILE_NAME);
+        writeFileContent(configFile, GsonUtils.sGson.toJson(config));
+        sProjectConfig = config;
+    }
+
     public static List<VirtualFile> getMatchFileList(VirtualFile[] files, Predicate<VirtualFile> predicate, boolean breakWhenFoundOne) {
         List<VirtualFile> result = new LinkedList<>();
         if (files == null) {

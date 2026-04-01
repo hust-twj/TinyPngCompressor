@@ -82,6 +82,14 @@ public class TinyPng {
      * @throws Exception
      */
     public static UploadInfo tinifyFile(String parent, File sourceFile) throws Exception {
+        UploadInfo uploadInfo = TinyPngV2.INSTANCE.tinifyFile(parent, sourceFile);
+        if (uploadInfo != null) {
+            return uploadInfo;
+        }
+        return tinifyFileByWeb(parent, sourceFile);
+    }
+
+    public static UploadInfo tinifyFileByWeb(String parent, File sourceFile) throws Exception {
         if (sourceFile == null || !sourceFile.exists() || sourceFile.isDirectory()) {
             return null;
         }
