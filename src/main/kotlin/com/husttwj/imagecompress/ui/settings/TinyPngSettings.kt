@@ -4,6 +4,7 @@ import com.husttwj.imagecompress.listener.VirtualFileListenerService
 import com.husttwj.imagecompress.model.ProjectConfig
 import com.husttwj.imagecompress.model.TinifyApiKeyConfig
 import com.husttwj.imagecompress.util.FileUtils
+import com.husttwj.imagecompress.util.LogUtil
 import com.husttwj.imagecompress.util.TinyPngV2
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.application.ApplicationManager
@@ -33,6 +34,7 @@ class TinyPngSettings(private val project: Project) : Configurable {
     private lateinit var statusHintLabel: JBLabel
 
     private var config: ProjectConfig? = null
+    private var autoRefreshInProgress = false
 
     override fun getDisplayName(): String = "TinyPngCompressor"
 
@@ -44,24 +46,38 @@ class TinyPngSettings(private val project: Project) : Configurable {
             TinyPngBundle.message("settings.autoDetectImageOption"),
             config?.isAutoDetectImage() ?: true
         )
-        apiKeyTableModel = TinifyApiKeyTableModel(config?.getTinifyApiKeys()?.map { it.copyItem() } ?: emptyList())
+        apiKeyTableModel = TinifyApiKeyTableModel(
+            config?.getTinifyApiKeys()?.map { it.copyItem() } ?: emptyList()
+        )
         apiKeyTable = JBTable(apiKeyTableModel)
         apiKeyTable.selectionModel.selectionMode = ListSelectionModel.SINGLE_SELECTION
         apiKeyTable.fillsViewportHeight = true
         apiKeyTable.columnModel.getColumn(1).cellRenderer = StatusCellRenderer()
+        apiKeyTable.putClientProperty("terminateEditOnFocusLost", true)
+        apiKeyTable.getDefaultEditor(String::class.java)?.addCellEditorListener(object : javax.swing.event.CellEditorListener {
+            override fun editingStopped(e: javax.swing.event.ChangeEvent?) {
+                triggerAutoRefreshAfterEdit()
+            }
+
+            override fun editingCanceled(e: javax.swing.event.ChangeEvent?) = Unit
+        })
 
         val addButton = createIconButton(AllIcons.General.Add, TinyPngBundle.message("settings.tinify.add"))
         addButton.addActionListener {
+            LogUtil.d("Settings add API key clicked")
             stopEditing()
             apiKeyTableModel.addRow(TinifyApiKeyConfig())
             val row = apiKeyTableModel.rowCount - 1
             if (row >= 0) {
                 apiKeyTable.setRowSelectionInterval(row, row)
+                apiKeyTable.editCellAt(row, 0)
+                apiKeyTable.editorComponent?.requestFocusInWindow()
             }
         }
 
         val deleteButton = createIconButton(AllIcons.General.Remove, TinyPngBundle.message("settings.tinify.delete"))
         deleteButton.addActionListener {
+            LogUtil.d("Settings delete API key clicked")
             stopEditing()
             val selectedRow = apiKeyTable.selectedRow
             if (selectedRow >= 0) {
@@ -71,6 +87,7 @@ class TinyPngSettings(private val project: Project) : Configurable {
 
         val refreshButton = createIconButton(AllIcons.Actions.Refresh, TinyPngBundle.message("settings.tinify.refresh"))
         refreshButton.addActionListener {
+            LogUtil.d("Settings manual refresh clicked")
             refreshStatusesInBackground()
         }
 
@@ -135,10 +152,18 @@ class TinyPngSettings(private val project: Project) : Configurable {
         config = null
     }
 
-    private fun refreshStatusesInBackground() {
-        stopEditing()
+    private fun refreshStatusesInBackground(stopEditingFirst: Boolean = true) {
+        if (autoRefreshInProgress) {
+            LogUtil.d("Settings refresh skipped: already in progress")
+            return
+        }
+        if (stopEditingFirst) {
+            stopEditing()
+        }
         val snapshot = normalize(apiKeyTableModel.items()).toMutableList()
+        LogUtil.d("Settings refresh start, keyCount=${snapshot.size}")
         statusHintLabel.text = TinyPngBundle.message("settings.tinify.refreshing")
+        autoRefreshInProgress = true
         ApplicationManager.getApplication().executeOnPooledThread {
             val tempConfig = ProjectConfig().apply {
                 setTinifyApiKeys(snapshot)
@@ -150,13 +175,31 @@ class TinyPngSettings(private val project: Project) : Configurable {
             ApplicationManager.getApplication().invokeLater({
                 result.onSuccess { refreshed ->
                     apiKeyTableModel.mergeStatuses(refreshed)
-                    statusHintLabel.text = TinyPngBundle.message("settings.tinify.hint")
+                    LogUtil.d("Settings refresh success, keyCount=${refreshed.size}")
+                    statusHintLabel.text = if (refreshed.isEmpty()) {
+                        TinyPngBundle.message("settings.tinify.hint")
+                    } else {
+                        TinyPngBundle.message("settings.tinify.refreshSuccess")
+                    }
                 }.onFailure { throwable ->
-                    com.husttwj.imagecompress.util.LogUtil.d("Refresh Tinify status failed", throwable)
+                    LogUtil.d("Refresh Tinify status failed", throwable)
                     statusHintLabel.text = TinyPngBundle.message("settings.tinify.refreshFailed")
                 }
+                autoRefreshInProgress = false
             }, ModalityState.any())
         }
+    }
+
+    private fun triggerAutoRefreshAfterEdit() {
+        val snapshot = normalize(apiKeyTableModel.items())
+        if (snapshot.isEmpty()) {
+            LogUtil.d("Settings auto refresh skipped: no API keys")
+            return
+        }
+        ApplicationManager.getApplication().invokeLater({
+            LogUtil.d("Settings auto refresh triggered after API key edit")
+            refreshStatusesInBackground(stopEditingFirst = false)
+        }, ModalityState.any())
     }
 
     private fun stopEditing() {
@@ -238,7 +281,8 @@ private class TinifyApiKeyTableModel(
         if (columnIndex != 0) {
             return
         }
-        rows[rowIndex].apiKey = aValue?.toString()?.trim().orEmpty()
+        val newValue = aValue?.toString()?.trim().orEmpty()
+        rows[rowIndex].apiKey = newValue
         rows[rowIndex].active = false
         rows[rowIndex].lastValidatedAt = 0L
         fireTableRowsUpdated(rowIndex, rowIndex)
