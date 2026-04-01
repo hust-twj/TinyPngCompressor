@@ -46,7 +46,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                             count = 0
                         }
                     } catch (throwable: Throwable) {
-                        LogUtil.d("Compress image error", throwable)
+                        LogUtil.d("ProcessActionListener.Compress image error.msg=${throwable.message}")
                         if (sleepTime < 5000) {
                             count = 0
                             sleepTime += 500
@@ -72,7 +72,7 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                     Messages.showMessageDialog(
                         dialog.contentPane,
                         "Compress error",
-                        "TinyPng Compress",
+                        "TinyPngCompressor",
                         Messages.getInformationIcon()
                     )
                 }

@@ -84,11 +84,13 @@ public class TinyImageDialog extends JDialog {
     private long mTotalSaveSize;
 
     public TinyImageDialog(Project project,
+                           JFrame owner,
                            List<VirtualFile> files,
                            List<VirtualFile> roots,
                            boolean isAutoPop,
                            HashMap<VirtualFile, File> compressMap,
                            String processKey) {
+        super(owner, "TinyPngCompressor", false);
         mInCompressProgress = false;
         mIsAutoPopup = isAutoPop;
         mImageFiles = files;
@@ -97,8 +99,11 @@ public class TinyImageDialog extends JDialog {
         this.mProcessKey = (processKey == null ? getProjectImageStoreKey(project) : processKey);
         mCompressedFileMap = compressMap;
 
-        LogUtil.d(">>>>>>>>>> show TinyImageDialog start >>>>>>>>>>");
-        setTitle("TinyPngCompressor");
+        LogUtil.d("TinyImageDialog init, project=" + project.getName()
+                + ", owner=" + (owner == null ? "null" : owner.getClass().getName())
+                + ", imageFiles=" + (files == null ? 0 : files.size())
+                + ", rootFiles=" + (roots == null ? 0 : roots.size())
+                + ", isAutoPopup=" + isAutoPop);
         setContentPane(mContentPanel);
         getRootPane().setDefaultButton(mBtnProcess);
 
@@ -156,7 +161,35 @@ public class TinyImageDialog extends JDialog {
         //设置左边宽度
         mSplitPanel.setDividerLocation(getMinimumSize().width * 3 / 10);
         this.setLocationRelativeTo(frame);
+        LogUtil.d("TinyImageDialog size prepared, minimum=" + getMinimumSize() + ", location=" + getLocation());
         this.pack();
+        LogUtil.d("TinyImageDialog packed, size=" + getSize() + ", location=" + getLocation());
+    }
+
+    public void showWithOwner() {
+        LogUtil.d("TinyImageDialog before show, displayable=" + isDisplayable()
+                + ", showing=" + isShowing()
+                + ", visible=" + isVisible()
+                + ", bounds=" + getBounds());
+        setVisible(true);
+        toFront();
+        repaint();
+        requestFocus();
+        LogUtil.d("TinyImageDialog after show, displayable=" + isDisplayable()
+                + ", showing=" + isShowing()
+                + ", visible=" + isVisible()
+                + ", focused=" + isFocused()
+                + ", active=" + isActive()
+                + ", bounds=" + getBounds()
+                + ", locationOnScreen=" + safeLocationOnScreen());
+    }
+
+    private String safeLocationOnScreen() {
+        try {
+            return String.valueOf(getLocationOnScreen());
+        } catch (Exception e) {
+            return "unavailable:" + e.getClass().getSimpleName();
+        }
     }
 
     private void configureUI() {

@@ -1,6 +1,7 @@
 package com.husttwj.imagecompress.listener
 
 import com.husttwj.imagecompress.ui.dialog.TinyImageDialog
+import com.husttwj.imagecompress.util.LogUtil
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -57,14 +58,13 @@ object ImageFilePasteHandler {
     private fun showCompressDialog(project: Project, files: List<VirtualFile>) {
         ApplicationManager.getApplication().invokeLater {
             WindowManager.getInstance().getFrame(project)?.let { frame ->
-
-                //showInfoMessage(project, files.firstOrNull()?.path?: "empty")
-                val dialog = TinyImageDialog(project, files, files, true, null, null)
+                LogUtil.d("Auto popup dialog preparing, project=${project.name}, fileCount=${files.size}")
+                val dialog = TinyImageDialog(project, frame, files, files, true, null, null)
                 dialog.setDialogSize(frame)
-                dialog.isVisible = true
                 dialog.isAlwaysOnTop = false
-            }
-
+                dialog.showWithOwner()
+                LogUtil.d("Auto popup dialog shown, project=${project.name}, showing=${dialog.isShowing}, visible=${dialog.isVisible}")
+            } ?: LogUtil.e("Auto popup dialog aborted: project frame is null, project=${project.name}")
         }
     }
 

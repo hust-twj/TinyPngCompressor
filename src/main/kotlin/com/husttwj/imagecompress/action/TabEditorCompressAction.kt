@@ -1,5 +1,6 @@
 package com.husttwj.imagecompress.action
 
+import com.husttwj.imagecompress.util.LogUtil
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -17,6 +18,8 @@ class TabEditorCompressAction : BaseAction() {
             sSupportedImageType.contains(it.extension?.lowercase()?: "") && !it.name.lowercase().endsWith(".9.png")
         }
         event.presentation.isVisible = show
+        event.presentation.isEnabled = show
+        LogUtil.d("EditorTab action update: visible=$show, fileCount=${files.size}, place=${event.place}")
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {

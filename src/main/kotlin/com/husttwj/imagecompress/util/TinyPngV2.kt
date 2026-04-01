@@ -13,6 +13,7 @@ object TinyPngV2 {
 
     fun tinifyFile(parent: String, sourceFile: File): UploadInfo? {
         if (!sourceFile.exists() || sourceFile.isDirectory) {
+            LogUtil.d("TinyPngV2. compress failed, sourceFile:${sourceFile.exists()}|${sourceFile.isDirectory}")
             return null
         }
         val config = FileUtils.getConfig()
@@ -20,7 +21,7 @@ object TinyPngV2 {
         return try {
             compressWithKey(parent, sourceFile, activeKey.apiKey)
         } catch (throwable: Throwable) {
-            LogUtil.d("TinyPngV2 compress failed, fallback to web mode", throwable)
+            LogUtil.e("TinyPngV2. compress failed, fallback to web mode, msg:${throwable.message}")
             markKeyStatus(config, activeKey.apiKey, false)
             null
         }
@@ -98,7 +99,7 @@ object TinyPngV2 {
             }
             true
         } catch (throwable: Throwable) {
-            LogUtil.e("Tinify validate failed", throwable)
+            LogUtil.e("TinyPngV2. Tinify validate failed", throwable)
             false
         }
     }

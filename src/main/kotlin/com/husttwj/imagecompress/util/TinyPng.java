@@ -39,7 +39,7 @@ public class TinyPng {
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             sslSocketFactory = sslContext.getSocketFactory();
         } catch (Exception e) {
-            LogUtil.d("OKHttp Error", e);
+            LogUtil.d("TinyPng. OKHttp Error", e);
         }
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
@@ -84,6 +84,7 @@ public class TinyPng {
     public static UploadInfo tinifyFile(String parent, File sourceFile) throws Exception {
         UploadInfo uploadInfo = TinyPngV2.INSTANCE.tinifyFile(parent, sourceFile);
         if (uploadInfo != null) {
+            LogUtil.d("TinyPng. Compress success with TinyPng SDK");
             return uploadInfo;
         }
         return tinifyFileByWeb(parent, sourceFile);
@@ -91,8 +92,10 @@ public class TinyPng {
 
     public static UploadInfo tinifyFileByWeb(String parent, File sourceFile) throws Exception {
         if (sourceFile == null || !sourceFile.exists() || sourceFile.isDirectory()) {
+            LogUtil.e("TinyPng. tinifyFileByWeb error:" + (sourceFile == null));
             return null;
         }
+        LogUtil.d("TinyPng. tinifyFileByWeb start");
         String fileType = sourceFile.getName().substring(sourceFile.getName().lastIndexOf(".") + 1);
         final String type = "image/" + ("jpg".equals(fileType) ? "jpeg" : fileType);
         HashMap<String, String> head = new HashMap<>();
@@ -119,6 +122,7 @@ public class TinyPng {
         Request request = requestBuilder.build();
         final Response response = sOkHttpClient.newCall(request).execute();
         if (!response.isSuccessful()) {
+            LogUtil.e("TinyPng. Compress v1 error:" + response.message());
             throw new IllegalAccessException(response.message());
         }
         final UploadInfo uploadInfo = GsonUtils.sGson.fromJson(response.body().string(), UploadInfo.class);
@@ -130,6 +134,7 @@ public class TinyPng {
         final File convertedFile = new File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + "." + fileType);
         tmpfile.renameTo(convertedFile);
         uploadInfo.getOutput().setFile(convertedFile);
+        LogUtil.d("TinyPng. Compress v1 success.");
         return uploadInfo;
     }
 

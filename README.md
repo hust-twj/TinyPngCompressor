@@ -22,6 +22,8 @@
 
 ![guide 4](images/guide_4.png)
 
+![guide 5](images/guide_5.png)
+
 ## 🛠 How to Use
 
 1. **Right-click** on a webP/png/jpeg image file or directory in the project view.
