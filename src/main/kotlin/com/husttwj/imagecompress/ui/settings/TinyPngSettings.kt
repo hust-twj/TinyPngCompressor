@@ -126,11 +126,10 @@ class TinyPngSettings(private val project: Project) : Configurable {
         val currentConfig = config ?: FileUtils.getConfig()
         currentConfig.setAutoDetectImage(autoDetectImageCheckBox.isSelected)
         currentConfig.setTinifyApiKeys(normalize(apiKeyTableModel.items()).toMutableList())
-        TinyPngV2.refreshStatuses(currentConfig)
-        apiKeyTableModel.replaceAll(currentConfig.getTinifyApiKeys().map { it.copyItem() })
         FileUtils.saveConfig(currentConfig)
         FileUtils.resetConfig()
         config = FileUtils.getConfig()
+        apiKeyTableModel.replaceAll(config?.getTinifyApiKeys()?.map { it.copyItem() } ?: emptyList())
 
         val listenerService = project.getService(VirtualFileListenerService::class.java)
         if (autoDetectImageCheckBox.isSelected) {
