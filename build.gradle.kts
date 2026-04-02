@@ -12,7 +12,7 @@ plugins {
 group = "com.husttwj"
 //1. change version
 //2. update changelog in plugin.xml
-version = "1.3.0"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -50,7 +50,7 @@ dependencies {
     // OkHttp 库，用于发送 HTTP 请求，实现图片压缩时与 TinyPNG API 通信
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
-    implementation("com.tinify:tinify:1.6.2")
+    implementation("com.tinify:tinify:1.8.0")
 
     implementation("com.twelvemonkeys.imageio:imageio-webp:3.12.0")
 

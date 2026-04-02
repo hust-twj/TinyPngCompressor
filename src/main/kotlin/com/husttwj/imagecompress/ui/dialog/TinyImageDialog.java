@@ -5,6 +5,7 @@ import com.husttwj.imagecompress.listener.*;
 import com.husttwj.imagecompress.ui.components.JImage;
 import com.husttwj.imagecompress.ui.settings.TinyPngBundle;
 import com.husttwj.imagecompress.util.*;
+import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.CheckboxTree;
@@ -20,7 +21,6 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -351,13 +351,13 @@ public class TinyImageDialog extends JDialog {
         mBtnWebpHelp.setContentAreaFilled(false);
         mBtnWebpHelp.setOpaque(false);
         mBtnWebpHelp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        mBtnWebpHelp.setPreferredSize(new Dimension(16, 16));
-        mBtnWebpHelp.setMinimumSize(new Dimension(16, 16));
-        mBtnWebpHelp.setMaximumSize(new Dimension(16, 16));
+        mBtnWebpHelp.setPreferredSize(new Dimension(18, 18));
+        mBtnWebpHelp.setMinimumSize(new Dimension(18, 18));
+        mBtnWebpHelp.setMaximumSize(new Dimension(18, 18));
         mBtnWebpHelp.setHorizontalAlignment(SwingConstants.CENTER);
         mBtnWebpHelp.setVerticalAlignment(SwingConstants.CENTER);
         mBtnWebpHelp.setBorder(JBUI.Borders.empty(0));
-        mBtnWebpHelp.setIcon(createHelpIcon(16));
+        mBtnWebpHelp.setIcon(IconLoader.getIcon("/icons/question.svg", TinyImageDialog.class));
         installWebpHelpOverlay();
     }
 
@@ -388,30 +388,13 @@ public class TinyImageDialog extends JDialog {
         int textStartX = checkWidth + mCheckConvertToWebp.getIconTextGap();
         int w = mBtnWebpHelp.getPreferredSize().width;
         int h = mBtnWebpHelp.getPreferredSize().height;
-        int x = textStartX + textWidth + 2;
+        //？and text gap
+        int x = textStartX + textWidth + 8;
         int centerY = mCheckConvertToWebp.getHeight() / 2;
         int y = Math.max(0, centerY - h / 2);
         mBtnWebpHelp.setBounds(x, y, w, h);
         mCheckConvertToWebp.revalidate();
         mCheckConvertToWebp.repaint();
-    }
-
-    private Icon createHelpIcon(int size) {
-        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = image.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(new JBColor(new Color(0xE5E7EB), new Color(0x3A3D41)));
-        g2.fillOval(0, 0, size - 1, size - 1);
-        g2.setColor(new JBColor(new Color(0x111827), new Color(0xD1D5DB)));
-        Font font = getFont().deriveFont(Font.BOLD, 10f);
-        g2.setFont(font);
-        FontMetrics metrics = g2.getFontMetrics(font);
-        String text = "?";
-        int x = (size - metrics.stringWidth(text)) / 2;
-        int y = (size - metrics.getHeight()) / 2 + metrics.getAscent();
-        g2.drawString(text, x, y);
-        g2.dispose();
-        return new ImageIcon(image);
     }
 
     public void setCompressInProgress(boolean value) {
