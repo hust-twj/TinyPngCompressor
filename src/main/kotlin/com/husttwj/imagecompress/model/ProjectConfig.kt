@@ -18,6 +18,11 @@ class ProjectConfig {
      */
     private var autoDetectImage: Boolean = true
 
+    /**
+     * compress dialog -> Convert to WebP checkbox
+     */
+    private var convertToWebpEnabled: Boolean = false
+
 
     fun getTinyUrl(): String {
         if (tinyUrl == null || tinyUrl!!.isEmpty()) {
@@ -32,6 +37,14 @@ class ProjectConfig {
 
     fun setAutoDetectImage(autoDetectImage: Boolean) {
         this.autoDetectImage = autoDetectImage
+    }
+
+    fun isConvertToWebpEnabled(): Boolean {
+        return convertToWebpEnabled
+    }
+
+    fun setConvertToWebpEnabled(convertToWebpEnabled: Boolean) {
+        this.convertToWebpEnabled = convertToWebpEnabled
     }
 
     fun getTinifyApiKeys(): MutableList<TinifyApiKeyConfig> {

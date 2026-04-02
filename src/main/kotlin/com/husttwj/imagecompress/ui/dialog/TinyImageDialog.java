@@ -2,6 +2,7 @@ package com.husttwj.imagecompress.ui.dialog;
 
 
 import com.husttwj.imagecompress.listener.*;
+import com.husttwj.imagecompress.model.ProjectConfig;
 import com.husttwj.imagecompress.ui.components.JImage;
 import com.husttwj.imagecompress.ui.settings.TinyPngBundle;
 import com.husttwj.imagecompress.util.*;
@@ -244,6 +245,8 @@ public class TinyImageDialog extends JDialog {
         mBtnProcess.setText("Compress");
         mCheckConvertToWebp.setText(TinyPngBundle.message("dialog.convertToWebp"));
         mCheckConvertToWebp.setBorder(JBUI.Borders.empty(0, 0, 0, 32));
+        initConvertToWebpState();
+        mCheckConvertToWebp.addItemListener(e -> persistConvertToWebpState(mCheckConvertToWebp.isSelected()));
         configureWebpHelpButton();
 
         mDetailsAfter.setFont(new Font(mDetailsAfter.getFont().getName(), mDetailsAfter.getFont().getStyle(), 14));
@@ -335,6 +338,26 @@ public class TinyImageDialog extends JDialog {
 
     public boolean isConvertToWebpSelected() {
         return mCheckConvertToWebp != null && mCheckConvertToWebp.isSelected();
+    }
+
+    private void initConvertToWebpState() {
+        ProjectConfig config = FileUtils.getConfig();
+        boolean selected = config != null && config.isConvertToWebpEnabled();
+        mCheckConvertToWebp.setSelected(selected);
+        LogUtil.d("TinyImageDialog. init convertToWebp state=" + selected);
+    }
+
+    private void persistConvertToWebpState(boolean selected) {
+        ProjectConfig config = FileUtils.getConfig();
+        if (config == null) {
+            return;
+        }
+        if (config.isConvertToWebpEnabled() == selected) {
+            return;
+        }
+        config.setConvertToWebpEnabled(selected);
+        FileUtils.saveConfig(config);
+        LogUtil.d("TinyImageDialog. persist convertToWebp state=" + selected);
     }
 
     private void showWebpHelp() {
