@@ -3,6 +3,7 @@ package com.husttwj.imagecompress.ui.dialog;
 
 import com.husttwj.imagecompress.listener.*;
 import com.husttwj.imagecompress.ui.components.JImage;
+import com.husttwj.imagecompress.ui.settings.TinyPngBundle;
 import com.husttwj.imagecompress.util.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -19,6 +20,9 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -46,6 +50,10 @@ public class TinyImageDialog extends JDialog {
     private JButton mBtnCancel;
 
     private JButton mBtnProcess;
+
+    private JCheckBox mCheckConvertToWebp;
+
+    private JButton mBtnWebpHelp;
 
     private JComponent mImageBefore;
 
@@ -109,6 +117,7 @@ public class TinyImageDialog extends JDialog {
 
         mBtnProcess.addActionListener(new ProcessActionListener(this));
         mBtnSave.addActionListener(new SaveActionListener(this));
+        mBtnWebpHelp.addActionListener(e -> showWebpHelp());
 
         final CancelActionListener cancelActionListener = new CancelActionListener(this);
         mBtnCancel.addActionListener(cancelActionListener);
@@ -233,6 +242,9 @@ public class TinyImageDialog extends JDialog {
         mBtnSave.setText("Save");
         mBtnCancel.setText("Cancel");
         mBtnProcess.setText("Compress");
+        mCheckConvertToWebp.setText(TinyPngBundle.message("dialog.convertToWebp"));
+        mCheckConvertToWebp.setBorder(JBUI.Borders.empty(0, 0, 0, 32));
+        configureWebpHelpButton();
 
         mDetailsAfter.setFont(new Font(mDetailsAfter.getFont().getName(), mDetailsAfter.getFont().getStyle(), 14));
         mDetailsBefore.setFont(new Font(mDetailsBefore.getFont().getName(), mDetailsBefore.getFont().getStyle(), 14));
@@ -319,6 +331,87 @@ public class TinyImageDialog extends JDialog {
 
     public JButton getBtnProcess() {
         return mBtnProcess;
+    }
+
+    public boolean isConvertToWebpSelected() {
+        return mCheckConvertToWebp != null && mCheckConvertToWebp.isSelected();
+    }
+
+    private void showWebpHelp() {
+        LogUtil.d("TinyImageDialog. show webp help clicked");
+        WebpHelpDialog dialog = new WebpHelpDialog(this);
+        dialog.setVisible(true);
+    }
+
+    private void configureWebpHelpButton() {
+        mBtnWebpHelp.setToolTipText(TinyPngBundle.message("dialog.webpHelp.tooltip"));
+        mBtnWebpHelp.setText("");
+        mBtnWebpHelp.setFocusable(false);
+        mBtnWebpHelp.setBorderPainted(false);
+        mBtnWebpHelp.setContentAreaFilled(false);
+        mBtnWebpHelp.setOpaque(false);
+        mBtnWebpHelp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        mBtnWebpHelp.setPreferredSize(new Dimension(16, 16));
+        mBtnWebpHelp.setMinimumSize(new Dimension(16, 16));
+        mBtnWebpHelp.setMaximumSize(new Dimension(16, 16));
+        mBtnWebpHelp.setHorizontalAlignment(SwingConstants.CENTER);
+        mBtnWebpHelp.setVerticalAlignment(SwingConstants.CENTER);
+        mBtnWebpHelp.setBorder(JBUI.Borders.empty(0));
+        mBtnWebpHelp.setIcon(createHelpIcon(16));
+        installWebpHelpOverlay();
+    }
+
+    private void installWebpHelpOverlay() {
+        Container parent = mBtnWebpHelp.getParent();
+        if (parent != null) {
+            parent.remove(mBtnWebpHelp);
+        }
+        mCheckConvertToWebp.setLayout(null);
+        mCheckConvertToWebp.add(mBtnWebpHelp);
+        mCheckConvertToWebp.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                relocateWebpHelpButton();
+            }
+        });
+        SwingUtilities.invokeLater(this::relocateWebpHelpButton);
+    }
+
+    private void relocateWebpHelpButton() {
+        if (mCheckConvertToWebp == null || mBtnWebpHelp == null) {
+            return;
+        }
+        FontMetrics metrics = mCheckConvertToWebp.getFontMetrics(mCheckConvertToWebp.getFont());
+        int textWidth = metrics.stringWidth(mCheckConvertToWebp.getText());
+        Icon checkIcon = UIManager.getIcon("CheckBox.icon");
+        int checkWidth = checkIcon == null ? 16 : checkIcon.getIconWidth();
+        int textStartX = checkWidth + mCheckConvertToWebp.getIconTextGap();
+        int w = mBtnWebpHelp.getPreferredSize().width;
+        int h = mBtnWebpHelp.getPreferredSize().height;
+        int x = textStartX + textWidth + 2;
+        int centerY = mCheckConvertToWebp.getHeight() / 2;
+        int y = Math.max(0, centerY - h / 2);
+        mBtnWebpHelp.setBounds(x, y, w, h);
+        mCheckConvertToWebp.revalidate();
+        mCheckConvertToWebp.repaint();
+    }
+
+    private Icon createHelpIcon(int size) {
+        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = image.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(new JBColor(new Color(0xE5E7EB), new Color(0x3A3D41)));
+        g2.fillOval(0, 0, size - 1, size - 1);
+        g2.setColor(new JBColor(new Color(0x111827), new Color(0xD1D5DB)));
+        Font font = getFont().deriveFont(Font.BOLD, 10f);
+        g2.setFont(font);
+        FontMetrics metrics = g2.getFontMetrics(font);
+        String text = "?";
+        int x = (size - metrics.stringWidth(text)) / 2;
+        int y = (size - metrics.getHeight()) / 2 + metrics.getAscent();
+        g2.drawString(text, x, y);
+        g2.dispose();
+        return new ImageIcon(image);
     }
 
     public void setCompressInProgress(boolean value) {

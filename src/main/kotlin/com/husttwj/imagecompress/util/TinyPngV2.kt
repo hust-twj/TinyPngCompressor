@@ -4,14 +4,20 @@ import com.husttwj.imagecompress.model.OutputInfo
 import com.husttwj.imagecompress.model.ProjectConfig
 import com.husttwj.imagecompress.model.TinifyApiKeyConfig
 import com.husttwj.imagecompress.model.UploadInfo
+import com.tinify.Options
+import com.tinify.Source
 import com.tinify.Tinify
 import java.io.File
 
 object TinyPngV2 {
 
     private val tinifyLock = Any()
+    private val webpConvertibleTypes = setOf("png", "jpg", "jpeg")
 
-    fun tinifyFile(parent: String, sourceFile: File): UploadInfo? {
+    /**
+     * @param convertToWebp true:convert png to webp if it can be smaller and then compress; false: only compress without format conversion
+     */
+    fun tinifyFile(parent: String, sourceFile: File, convertToWebp: Boolean): UploadInfo? {
         if (!sourceFile.exists() || sourceFile.isDirectory) {
             LogUtil.d("TinyPngV2. compress failed, sourceFile:${sourceFile.exists()}|${sourceFile.isDirectory}")
             return null
@@ -19,7 +25,7 @@ object TinyPngV2 {
         val config = FileUtils.getConfig()
         val activeKey = validateAndPickActiveKey(config) ?: return null
         return try {
-            compressWithKey(parent, sourceFile, activeKey.apiKey)
+            compressWithKey(parent, sourceFile, activeKey.apiKey, convertToWebp)
         } catch (throwable: Throwable) {
             LogUtil.e("TinyPngV2. compress failed, fallback to web mode, msg:${throwable.message}")
             markKeyStatus(config, activeKey.apiKey, false)
@@ -97,6 +103,7 @@ object TinyPngV2 {
                 Tinify.setKey(apiKey)
                 Tinify.validate()
             }
+            LogUtil.d("TinyPngV2. Tinify validate success")
             true
         } catch (throwable: Throwable) {
             LogUtil.e("TinyPngV2. Tinify validate failed", throwable)
@@ -104,9 +111,61 @@ object TinyPngV2 {
         }
     }
 
-    private fun compressWithKey(parent: String, sourceFile: File, apiKey: String): UploadInfo {
-        val fileType = sourceFile.extension.ifEmpty { "png" }
-        val fileName = MD5Utils.getMD5(sourceFile.absolutePath + sourceFile.lastModified() + sourceFile.length())
+    private fun compressWithKey(parent: String, sourceFile: File, apiKey: String, convertToWebp: Boolean): UploadInfo {
+        val extension = sourceFile.extension.lowercase()
+        if (convertToWebp && webpConvertibleTypes.contains(extension)) {
+            LogUtil.d("TinyPngV2. try convert $extension to webp, file=${sourceFile.name}")
+            val converted = convertToWebpIfSmaller(parent, sourceFile, apiKey)
+            if (converted != null) {
+                LogUtil.d("TinyPngV2. convert $extension to webp success, file=${converted.output?.file?.name}")
+                return converted
+            }
+            LogUtil.d("TinyPngV2. convert $extension to webp skipped or discarded, continue normal compress, file=${sourceFile.name}")
+        } else if (convertToWebp) {
+            LogUtil.d("TinyPngV2. convertToWebp skipped: unsupported source type=$extension, file=${sourceFile.name}")
+        }
+        return compressPreparedFile(parent, sourceFile, apiKey, sourceFile.extension.ifEmpty { "png" })
+    }
+
+    private fun convertToWebpIfSmaller(parent: String, sourceFile: File, apiKey: String): UploadInfo? {
+        val fileName = buildCacheName(sourceFile)
+        val convertedWebp = File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + ".webp.converted")
+        convertedWebp.parentFile?.mkdirs()
+        synchronized(tinifyLock) {
+            Tinify.setKey(apiKey)
+            val source: Source = Tinify.fromFile(sourceFile.absolutePath)
+            val converted = source.convert(
+                Options().with("type", arrayOf("image/png", "image/webp"))
+            ).result()
+            converted.toFile(convertedWebp.absolutePath)
+            LogUtil.d("TinyPngV2. sdk convert result extension=${converted.extension()}, size=${converted.size()}, file=${sourceFile.name}")
+        }
+        if (convertedWebp.length() >= sourceFile.length()) {
+            LogUtil.d("TinyPngV2. discard converted webp because it is not smaller, source=${sourceFile.length()}, webp=${convertedWebp.length()}, file=${sourceFile.name}")
+            FileUtils.deleteFile(convertedWebp)
+            return null
+        }
+        LogUtil.d("TinyPngV2. converted webp is smaller, source=${sourceFile.length()}, webp=${convertedWebp.length()}, file=${sourceFile.name}")
+
+        val compressedWebp = compressPreparedFile(parent, convertedWebp, apiKey, "webp")
+        val compressedFile = compressedWebp.output?.file
+        if (compressedFile != null && compressedFile.length() > convertedWebp.length()) {
+            LogUtil.d("TinyPngV2. compressed webp is larger than converted webp, keep converted webp, converted=${convertedWebp.length()}, compressed=${compressedFile.length()}, file=${sourceFile.name}")
+            val finalWebp = File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + ".webp")
+            if (finalWebp.exists()) {
+                FileUtils.deleteFile(finalWebp)
+            }
+            convertedWebp.renameTo(finalWebp)
+            compressedWebp.output?.file = finalWebp
+            compressedWebp.output?.size = finalWebp.length().toInt()
+            return compressedWebp
+        }
+        FileUtils.deleteFile(convertedWebp)
+        return compressedWebp
+    }
+
+    private fun compressPreparedFile(parent: String, sourceFile: File, apiKey: String, fileType: String): UploadInfo {
+        val fileName = buildCacheName(sourceFile)
         val tmpFile = File(FileUtils.sImageFileDirPath, parent + File.separator + fileName + "." + fileType + ".tmp")
         tmpFile.parentFile?.mkdirs()
         synchronized(tinifyLock) {
@@ -118,14 +177,17 @@ object TinyPngV2 {
             FileUtils.deleteFile(convertedFile)
         }
         tmpFile.renameTo(convertedFile)
-
         val outputInfo = OutputInfo()
         outputInfo.file = convertedFile
         outputInfo.size = convertedFile.length().toInt()
-        outputInfo.type = sourceFile.extension
+        outputInfo.type = fileType
         val uploadInfo = UploadInfo()
         uploadInfo.output = outputInfo
         return uploadInfo
+    }
+
+    private fun buildCacheName(sourceFile: File): String {
+        return MD5Utils.getMD5(sourceFile.absolutePath + sourceFile.lastModified() + sourceFile.length())
     }
 
     private fun markKeyStatus(config: ProjectConfig, apiKey: String, active: Boolean) {

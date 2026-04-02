@@ -78,14 +78,18 @@ public class TinyPng {
      *
      * @param parent
      * @param sourceFile
+     * @param  convertToWebp 转换为webp
      * @return
      * @throws Exception
      */
-    public static UploadInfo tinifyFile(String parent, File sourceFile) throws Exception {
-        UploadInfo uploadInfo = TinyPngV2.INSTANCE.tinifyFile(parent, sourceFile);
+    public static UploadInfo tinifyFile(String parent, File sourceFile, boolean convertToWebp) throws Exception {
+        UploadInfo uploadInfo = TinyPngV2.INSTANCE.tinifyFile(parent, sourceFile, convertToWebp);
         if (uploadInfo != null) {
             LogUtil.d("TinyPng. Compress success with TinyPng SDK");
             return uploadInfo;
+        }
+        if (convertToWebp) {
+            LogUtil.d("TinyPng. convertToWebp is ignored in web mode fallback.");
         }
         return tinifyFileByWeb(parent, sourceFile);
     }

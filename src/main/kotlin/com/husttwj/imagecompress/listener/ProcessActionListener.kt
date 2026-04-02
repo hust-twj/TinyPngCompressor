@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultTreeModel
 class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog) {
 
     override fun actionPerformed(e: ActionEvent) {
+        LogUtil.d("ProcessAction. start compress, convertToWebp=${dialog.isConvertToWebpSelected}")
 
         dialog.compressInProgress = true
         dialog.btnProcess.isEnabled = false
@@ -39,7 +40,11 @@ class ProcessActionListener(dialog: TinyImageDialog) : ActionListenerBase(dialog
                             Thread.sleep(sleepTime)
                         }
                         count++
-                        val uploadInfo = TinyPng.tinifyFile(dialog.processKey, File(node.virtualFile!!.path))
+                        val uploadInfo = TinyPng.tinifyFile(
+                            dialog.processKey,
+                            File(node.virtualFile!!.path),
+                            dialog.isConvertToWebpSelected
+                        )
                         node.compressedImageFile = uploadInfo.output!!.file
                         if (count > 6 && sleepTime > 0) {
                             sleepTime -= 500
